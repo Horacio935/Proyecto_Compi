@@ -24,7 +24,7 @@ reservadas = {
 
 tokens = tokens+list(reservadas.values())
 
-t_ESPACIO = '\t'
+t_ESPACIO = '\s+'
 t_sam = r'\+' 
 t_sonem = r'\-'
 t_ivid = r'/'
@@ -50,7 +50,7 @@ t_COMILLAS = r'"|"'
 
 def t_Nombre(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = reservadas.get(t.value.upper(), 'ID')  # Asigna el tipo según las palabras reservadas de Ruby
+    t.type = reservadas.get(t.value.upper(), 'Nombre')  # Asigna el tipo según las palabras reservadas de Ruby
     return t
 
 
@@ -94,6 +94,8 @@ test = os.path.join(directorio, archivo)
 fp = codecs.open(test, "r", "utf-8")
 cadena = fp.read()
 fp.close()
+
+analizador = lex.lex()
 
 analizador.input(cadena)
 
