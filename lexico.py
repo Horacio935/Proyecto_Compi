@@ -10,16 +10,16 @@ tokens = ['Nombre','NUMEROS', 'sam','sonem','ivid','itlum',
 ]
 
 reservadas = {
-    'main':'niam',
-    'if':'fi',
-    'else':'esle',
-    'while':'elihw',
-    'for':'rof',
-    'do':'od',
-    'return':'ranroter',
-    'print':'rimirpmi',
-    'read':'reel',
-    'def':'fed'
+    'niam':'main',
+    'fi':'if',
+    'esle':'else',
+    'elihw':'while',
+    'rof':'for',
+    'od':'do',
+    'ranroter':'return',
+    'rimirpmi':'print',
+    'reel':'read',
+    'fed':'def'
 }
 
 tokens = tokens+list(reservadas.values())
@@ -67,35 +67,31 @@ def t_error(t):
 	print ("caracter ilegal '%$'" % t.value[0])
 	t.lexer.skip(1)
 
-def buscarFicheros(directorio):
-      ficheros =  []
-      numArchivo = ''
-      respuesta = False
-      cont = 1
+def buscarFicheros(directorio, extensiones=['.txt', '.rb']):
+    ficheros = []
+    respuesta = False
 
-      for base, dirs, files in os.walk(directorio):
-        ficheros.append(files)
+    for base, dirs, files in os.walk(directorio):
+        ficheros.extend(files)
 
-        for file in files:
-              print (str(cont)+". "+file)
-              cont = cont+1
+        for idx, file in enumerate(files):
+            if file.endswith(tuple(extensiones)):
+                print(f"{idx + 1}. {file}")
 
-        while respuesta == False:
-              numArchivo = input('\nNumero del test: ')
-              for file in files:
-                   if file == files[int(numArchivo)-1]:
-                         respuesta = True
-                         break
-                   
-        print("Has escogido \"%s\" \n" % files[int(numArchivo) - 1])
+    while not respuesta:
+        nombreArchivo = input('\nNombre del archivo: ')
+        if nombreArchivo in ficheros:
+            respuesta = True
+        else:
+            print("Nombre de archivo inválido. Inténtalo de nuevo.")
 
+    print(f"Has escogido \"{nombreArchivo}\" \n")
+    return nombreArchivo
 
-        return files[int(numArchivo)-1]
-      
-directorio = 'directorio = C:/Users/lopez/OneDrive/Escritorio/UMG/7mo Semestre/Compiladores/ProyectoFinal'
-archivo = buscarFicheros(directorio)
-test = directorio+archivo
-fp = codecs.open(test,"r","utf-8")
+directorio = 'C:/Users/lopez/OneDrive/Escritorio/UMG/7mo Semestre/Compiladores/ProyectoFinal/tests'
+archivo = buscarFicheros(directorio, extensiones=['.txt', '.rb'])
+test = os.path.join(directorio, archivo)
+fp = codecs.open(test, "r", "utf-8")
 cadena = fp.read()
 fp.close()
 
