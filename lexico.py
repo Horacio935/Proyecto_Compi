@@ -4,9 +4,9 @@ import codecs
 import os
 import sys
 
-tokens = ['Nombre','NUMEROS', 'sam','sonem','ivid','itlum',
-          'oicini','nif','COMILLAS','ESPACIO','IGUALACION','DIFERENCIA',
-          'MAYORMENOR','MAYORMENORI','OPCION','Asignacion'
+tokens = ['Nombre','NUMEROS','COMILLAS','ESPACIO','IGUALACION','DIFERENCIA',
+          'MML','MMR','MMIL','MMIR','OPCI','OPCII','Asignacion','INVALIDO',
+          'TEXTO','PARENTIZQ','PARENTDER'
 ]
 
 reservadas = {
@@ -14,52 +14,58 @@ reservadas = {
     'fi':'if',
     'esle':'else',
     'elihw':'while',
-    'rof':'for',
+    'rof':'for', 
     'od':'do',
     'ranroter':'return',
     'rimirpmi':'print',
     'reel':'read',
-    'fed':'def'
+    'fed':'def',
+    'oicini':'LLAVEIZQ',
+    'nif':'LLAVEDER',
+    'sam':'MAS',
+    'sonem':'MENOS',
+    'ivid':'DIVISION',
+    'itlum':'MULTIPLICACION',
+    'ton':'NEGACION'
 }
+
+# Obtener solo los valores del diccionario reservadas
+valores_reservadas = list(reservadas.values())
+
+# Concatenar la lista tokens con los valores del diccionario reservadas
+tokens += valores_reservadas
 
 tokens = tokens+list(reservadas.values())
 
 t_ESPACIO = '\s+'
-t_sam = r'\+' 
-t_sonem = r'\-'
-t_ivid = r'/'
-t_itlum = r'\*'
-t_oicini = r'\{'
-t_nif = r'\}'
 t_Asignacion = r'='
-t_MAYORMENOR = r'<|>'
-t_MAYORMENORI = r'<=|>='
-t_DIFERENCIA = r'=!|!='
+t_MML = r'<'
+t_MMR = r'>'
+t_MMIL = r'<='
+t_MMIR = r'>='
+t_DIFERENCIA = r'!='
 t_IGUALACION = r'=='
-t_OPCION = r'&&|\|\|'
+t_OPCI = r'&&'
+t_OPCII = r'\|\|'
 t_COMILLAS = r'"|"'
-
-
-#def t_Nombre(t):
-#    r'[a-zA-Z_][a-zA-Z0-9_]*'
-#   if t.value.upper() in reservadas:
-#        t_value = t.value.upper()
-#       t.type = t.value
-
-#    return t
+t_PARENTIZQ = r'\('
+t_PARENTDER = r'\)'
 
 def t_Nombre(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = reservadas.get(t.value.upper(), 'Nombre')  # Asigna el tipo según las palabras reservadas de Ruby
+    t.type = reservadas.get(t.value, 'Nombre')  # Asigna el tipo según las palabras reservadas
     return t
 
-
-def t_COMMENT(t):
+def t_COMENTARIO(t):
 	r'\#.*'
 	pass
 
+def t_TEXTO(t):
+	r'"[a-zA-Z0-9_\s]*"'
+	return t
+
 def t_NUMEROS(t):
-     r'\d+(\.\d+)?'
+     r'\d+\.?\d+'
      t.value = float(t.value)
      return t
 
