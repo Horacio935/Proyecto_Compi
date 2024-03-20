@@ -4,29 +4,29 @@ import codecs
 import os
 import sys
 
-tokens = ['Nombre','NUMEROS','COMILLAS','ESPACIO','IGUALACION','DIFERENCIA',
-          'MML','MMR','MMIL','MMIR','OPCI','OPCII','Asignacion','INVALIDO',
-          'TEXTO','PARENTIZQ','PARENTDER'
+tokens = ['Nombre', 'NUMEROS', 'COMILLAS', 'ESPACIO', 'IGUALACION', 'DIFERENCIA',
+          'MML', 'MMR', 'MMIL', 'MMIR', 'OPCI', 'OPCII', 'Asignacion', 'INVALIDO',
+          'TEXTO', 'PARENTIZQ', 'PARENTDER'
 ]
 
 reservadas = {
-    'niam':'main',
-    'fi':'if',
-    'esle':'else',
-    'elihw':'while',
-    'rof':'for', 
-    'od':'do',
-    'ranroter':'return',
-    'rimirpmi':'print',
-    'reel':'read',
-    'fed':'def',
-    'oicini':'LLAVEIZQ',
-    'nif':'LLAVEDER',
-    'sam':'MAS',
-    'sonem':'MENOS',
-    'ivid':'DIVISION',
-    'itlum':'MULTIPLICACION',
-    'ton':'NEGACION'
+    'niam': 'main',
+    'fi': 'if',
+    'esle': 'else',
+    'elihw': 'while',
+    'rof': 'for',
+    'od': 'do',
+    'ranroter': 'return',
+    'rimirpmi': 'print',
+    'reel': 'read',
+    'fed': 'def',
+    'oicini': 'LLAVEIZQ',
+    'nif': 'LLAVEDER',
+    'sam': 'MAS',
+    'sonem': 'MENOS',
+    'ivid': 'DIVISION',
+    'itlum': 'MULTIPLICACION',
+    'ton': 'NEGACION'
 }
 
 # Obtener solo los valores del diccionario reservadas
@@ -35,7 +35,7 @@ valores_reservadas = list(reservadas.values())
 # Concatenar la lista tokens con los valores del diccionario reservadas
 tokens += valores_reservadas
 
-tokens = tokens+list(reservadas.values())
+tokens = tokens + list(reservadas.values())
 
 t_ESPACIO = '\s+'
 t_Asignacion = r'='
@@ -51,28 +51,37 @@ t_COMILLAS = r'"|"'
 t_PARENTIZQ = r'\('
 t_PARENTDER = r'\)'
 
+
 def t_Nombre(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     t.type = reservadas.get(t.value, 'Nombre')  # Asigna el tipo según las palabras reservadas
     return t
 
+
 def t_COMENTARIO(t):
-	r'\#.*'
-	pass
+    r'\#.*'
+    pass
+
 
 def t_TEXTO(t):
-	r'"[a-zA-Z0-9_\s]*"'
-	return t
+    r'"[a-zA-Z0-9_\s]*"'
+    return t
+
 
 def t_NUMEROS(t):
-     r'\d+\.?\d+'
-     t.value = float(t.value)
-     return t
+    r'\d+\.?\d+'
+    t.value = float(t.value)
+    return t
+
 
 def t_error(t):
-	print ("caracter ilegal '%$'" % t.value[0])
-	t.lexer.skip(1)
-      
+    error = f'caracter ilegal "{t.value[0]}" en la línea {t.lineno}, posición {t.lexpos}'
+    with open('bitacora_errores.html', 'a') as f:
+        f.write(f'<p>{error}</p>\n')
+    print(error)
+    t.lexer.skip(1)
+
+
 def generar_bitacora(tokens):
     archivo_bitacora = 'bitacora_tokens.html'
     with open(archivo_bitacora, 'w') as f:
@@ -90,13 +99,6 @@ def buscarFicheros(ruta, extensiones=['.txt', '.rb']):
     ficheros = []
     respuesta = False
 
-#    for base, dirs, files in os.walk(ruta):
-#        ficheros.extend(files)
-
-#        for idx, file in enumerate(files):
-#            if file.endswith(tuple(extensiones)):
-#                print(f"{idx + 1}. {file}")
-
     while not respuesta:
         nombreArchivo = input('\nRuta completa del archivo: ')
         if os.path.exists(nombreArchivo):
@@ -106,6 +108,7 @@ def buscarFicheros(ruta, extensiones=['.txt', '.rb']):
 
     print(f"Has escogido \"{nombreArchivo}\" \n")
     return nombreArchivo
+
 
 directorio = ''
 archivo = buscarFicheros(directorio, extensiones=['.txt', '.rb'])
