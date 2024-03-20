@@ -72,29 +72,42 @@ def t_NUMEROS(t):
 def t_error(t):
 	print ("caracter ilegal '%$'" % t.value[0])
 	t.lexer.skip(1)
+      
+def generar_bitacora(tokens):
+    archivo_bitacora = 'bitacora_tokens.html'
+    with open(archivo_bitacora, 'w') as f:
+        f.write('<!DOCTYPE html>\n<html>\n<head>\n<title>Bitácora de Tokens</title>\n</head>\n<body>\n')
+        f.write('<table border="1">\n')
+        f.write('<tr><th>Token</th><th>Valor</th><th>Línea</th><th>Posición</th></tr>\n')
+        for tok in tokens:
+            f.write(f'<tr><td>{tok.type}</td><td>{tok.value}</td><td>{tok.lineno}</td><td>{tok.lexpos}</td></tr>\n')
+        f.write('</table>\n')
+        f.write('</body>\n</html>\n')
+    print(f'Se ha generado la bitácora de tokens en el archivo "{archivo_bitacora}"')
 
-def buscarFicheros(directorio, extensiones=['.txt', '.rb']):
+
+def buscarFicheros(ruta, extensiones=['.txt', '.rb']):
     ficheros = []
     respuesta = False
 
-    for base, dirs, files in os.walk(directorio):
-        ficheros.extend(files)
+#    for base, dirs, files in os.walk(ruta):
+#        ficheros.extend(files)
 
-        for idx, file in enumerate(files):
-            if file.endswith(tuple(extensiones)):
-                print(f"{idx + 1}. {file}")
+#        for idx, file in enumerate(files):
+#            if file.endswith(tuple(extensiones)):
+#                print(f"{idx + 1}. {file}")
 
     while not respuesta:
-        nombreArchivo = input('\nNombre del archivo: ')
-        if nombreArchivo in ficheros:
+        nombreArchivo = input('\nRuta completa del archivo: ')
+        if os.path.exists(nombreArchivo):
             respuesta = True
         else:
-            print("Nombre de archivo inválido. Inténtalo de nuevo.")
+            print("Ruta de archivo inválida. Inténtalo de nuevo.")
 
     print(f"Has escogido \"{nombreArchivo}\" \n")
     return nombreArchivo
 
-directorio = 'C:/Users/lopez/OneDrive/Escritorio/UMG/7mo Semestre/Compiladores/ProyectoFinal/tests'
+directorio = ''
 archivo = buscarFicheros(directorio, extensiones=['.txt', '.rb'])
 test = os.path.join(directorio, archivo)
 fp = codecs.open(test, "r", "utf-8")
@@ -105,7 +118,12 @@ analizador = lex.lex()
 
 analizador.input(cadena)
 
+tokens_analizados = []
 while True:
-      tok = analizador.token()
-      if not tok : break
-      print (tok)
+    tok = analizador.token()
+    if not tok:
+        break
+    tokens_analizados.append(tok)
+    print(tok)
+
+generar_bitacora(tokens_analizados)
