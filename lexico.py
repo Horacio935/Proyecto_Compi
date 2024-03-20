@@ -4,29 +4,29 @@ import codecs
 import os
 import sys
 
-tokens = ['Nombre','NUMEROS','COMILLAS','ESPACIO','IGUALACION','DIFERENCIA',
-          'MML','MMR','MMIL','MMIR','OPCI','OPCII','Asignacion','INVALIDO',
-          'TEXTO','PARENTIZQ','PARENTDER'
+tokens = ['Nombre', 'NUMEROS', 'COMILLAS', 'ESPACIO', 'IGUALACION', 'DIFERENCIA',
+          'MML', 'MMR', 'MMIL', 'MMIR', 'OPCI', 'OPCII', 'Asignacion', 'INVALIDO',
+          'TEXTO', 'PARENTIZQ', 'PARENTDER'
 ]
 
 reservadas = {
-    'niam':'main',
-    'fi':'if',
-    'esle':'else',
-    'elihw':'while',
-    'rof':'for', 
-    'od':'do',
-    'ranroter':'return',
-    'rimirpmi':'print',
-    'reel':'read',
-    'fed':'def',
-    'oicini':'LLAVEIZQ',
-    'nif':'LLAVEDER',
-    'sam':'MAS',
-    'sonem':'MENOS',
-    'ivid':'DIVISION',
-    'itlum':'MULTIPLICACION',
-    'ton':'NEGACION'
+    'niam': 'main',
+    'fi': 'if',
+    'esle': 'else',
+    'elihw': 'while',
+    'rof': 'for',
+    'od': 'do',
+    'ranroter': 'return',
+    'rimirpmi': 'print',
+    'reel': 'read',
+    'fed': 'def',
+    'oicini': 'LLAVEIZQ',
+    'nif': 'LLAVEDER',
+    'sam': 'MAS',
+    'sonem': 'MENOS',
+    'ivid': 'DIVISION',
+    'itlum': 'MULTIPLICACION',
+    'ton': 'NEGACION'
 }
 
 # Obtener solo los valores del diccionario reservadas
@@ -35,7 +35,7 @@ valores_reservadas = list(reservadas.values())
 # Concatenar la lista tokens con los valores del diccionario reservadas
 tokens += valores_reservadas
 
-tokens = tokens+list(reservadas.values())
+tokens = tokens + list(reservadas.values())
 
 t_ESPACIO = '\s+'
 t_Asignacion = r'='
@@ -66,8 +66,9 @@ def t_Nombre(t):
 
 
 def t_COMENTARIO(t):
-	r'\#.*'
-	pass
+    r'\#.*'
+    pass
+
 
 def t_TEXTO(t):
 	r'"[a-zA-Z0-9_\s]*"'
@@ -121,13 +122,6 @@ def buscarFicheros(ruta, extensiones=['.txt', '.rb']):
     ficheros = []
     respuesta = False
 
-#    for base, dirs, files in os.walk(ruta):
-#        ficheros.extend(files)
-
-#        for idx, file in enumerate(files):
-#            if file.endswith(tuple(extensiones)):
-#                print(f"{idx + 1}. {file}")
-
     while not respuesta:
         nombreArchivo = input('\nRuta completa del archivo: ')
         if os.path.exists(nombreArchivo):
@@ -137,6 +131,7 @@ def buscarFicheros(ruta, extensiones=['.txt', '.rb']):
 
     print(f"Has escogido \"{nombreArchivo}\" \n")
     return nombreArchivo
+
 
 directorio = ''
 archivo = buscarFicheros(directorio, extensiones=['.txt', '.rb'])
