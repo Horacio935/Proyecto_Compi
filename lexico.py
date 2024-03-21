@@ -6,7 +6,7 @@ import sys
 
 tokens = ['Nombre', 'NUMEROS', 'COMILLAS', 'ESPACIO', 'IGUALACION', 'DIFERENCIA',
           'MML', 'MMR', 'MMIL', 'MMIR', 'OPCI', 'OPCII', 'Asignacion', 'INVALIDO',
-          'TEXTO', 'PARENTIZQ', 'PARENTDER'
+          'TEXTO', 'PARENTIZQ', 'PARENTDER', 'COMA',
 ]
 
 reservadas = {
@@ -20,13 +20,15 @@ reservadas = {
     'rimirpmi': 'print',
     'reel': 'read',
     'fed': 'def',
-    'oicini': 'LLAVEIZQ',
-    'nif': 'LLAVEDER',
+    'oicini': 'APERTINICIO',
+    'nif': 'APERTFIN',
     'sam': 'MAS',
     'sonem': 'MENOS',
     'ivid': 'DIVISION',
     'itlum': 'MULTIPLICACION',
-    'ton': 'NEGACION'
+    'ton': 'NEGACION',
+    'elbuod':'double',
+    'string':'gnirts'
 }
 
 # Obtener solo los valores del diccionario reservadas
@@ -38,42 +40,160 @@ tokens += valores_reservadas
 tokens = tokens + list(reservadas.values())
 
 t_ESPACIO = '\s+'
-t_Asignacion = r'='
-t_MML = r'<'
-t_MMR = r'>'
-t_MMIL = r'<='
-t_MMIR = r'>='
-t_DIFERENCIA = r'!='
-t_IGUALACION = r'=='
-t_OPCI = r'&&'
-t_OPCII = r'\|\|'
-t_COMILLAS = r'"|"'
-t_PARENTIZQ = r'\('
-t_PARENTDER = r'\)'
+#t_Asignacion = r'=' #Operador Comparativo
+#t_MML = r'<' #Operador Comparativo
+#t_MMR = r'>' #Operador Comparativo
+#t_MMIL = r'<=' #Operador Comparativo
+#t_MMIR = r'>=' #Operador Comparativo
+#t_DIFERENCIA = r'!=' #Operador Logico
+#t_IGUALACION = r'==' #Operador Comparativo
+#t_OPCI = r'&&' #Operador Logico
+#t_OPCII = r'\|\|' #Operador Logico
+#t_COMILLAS = r'"|"' #Simbolo
+#t_PARENTIZQ = r'\(' #Operador Logico
+#t_PARENTDER = r'\)' #Operador Logico
+#t_COMA = r',' #Simbolo
 
 tabla_simbolos = []  # Inicializamos la tabla de símbolos vacía
 
 def agregar_simbolo(token, tipo, ambito, visibilidad, tamaño, posicion, rol):
+    if tipo == 'TEXTO':
+        tamaño = len(token)
+    elif tipo == 'NUMEROS':
+        tamaño = len(str(token))  # Convertir el número a cadena y calcular su longitud
+    elif tipo == 'Nombre':
+        tamaño = len(token)
+    elif tipo == 'Asignacion':
+        tamaño = len(token)
+    elif tipo == 'MML':
+        tamaño = len(token)
+    elif tipo == 'MMR':
+        tamaño = len(token)
+    elif tipo == 'MMIL':
+        tamaño = len(token)
+    elif tipo == 'MMIR':
+        tamaño = len(token)
+    elif tipo == 'DIFERENCIA':
+        tamaño = len(token)
+    elif tipo == 'IGUALACION':
+        tamaño = len(token)
+    elif tipo == 'OPCI':
+        tamaño = len(token)
+    elif tipo == 'OPCII':
+        tamaño = len(token)
+    elif tipo == 'COMILLAS':
+        tamaño = len(token)
+    elif tipo == 'PARENTIZQ':
+        tamaño = len(token)
+    elif tipo == 'PARENTDER':
+        tamaño = len(token)
+    elif tipo == 'COMA':
+        tamaño = len(token)
+    elif tipo in valores_reservadas:
+        tamaño = len(token)
     tabla_simbolos.append({'Token': token, 'Tipo': tipo, 'Ambito': ambito, 'Visibilidad': visibilidad,
                            'Tamaño': tamaño, 'Posicion': posicion, 'Rol': rol})
 
 def t_Nombre(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = reservadas.get(t.value, 'Nombre')  # Asigna el tipo según las palabras reservadas
-    # Agregar el símbolo a la tabla
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Identificador')
+    # Asigna el tipo según las palabras reservadas
+    t.type = reservadas.get(t.value, 'Nombre')
+    # Verifica si el tipo del token es un operador lógico y ajusta el rol
+    if t.value in ['sam', 'sonem', 'ivid', 'itlum', 'ton']:
+        rol = 'Operadores Comparativos'
+    else:
+        rol = 'Identificador'
+    # Agregar el símbolo a la tabla con el rol correspondiente
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, rol)
     return t
-
 
 def t_COMENTARIO(t):
     r'\#.*'
     pass
 
-
 def t_TEXTO(t):
-	r'"[a-zA-Z0-9_\s]*"'
-    #agregar_simbolo(t.value, 'TEXTO', 'Global', 'Publico', 0, t.lexpos, 'Texto')
-	return t
+    r'"[a-zA-Z0-9_\s]*"'
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, 'TEXTO', 'Global', 'Publico', 0, t.lexpos, 'Texto')
+    return t
+
+def t_Asignacion(t):
+    r'='
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Operador Comparativo')
+    return t
+
+def t_MML(t):
+    r'<'
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Operador Comparativo')
+    return t
+
+def t_MMR(t):
+    r'>'
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Operador Comparativo')
+    return t
+
+def t_MMIL(t):
+    r'<='
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Operador Comparativo')
+    return t
+
+def t_MMIR(t):
+    r'>='
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Operador Comparativo')
+    return t
+
+def t_DIFERENCIA(t):
+    r'!='
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Operador Logico')
+    return t
+
+def t_IGUALACION(t):
+    r'=='
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Operador Comparativo')
+    return t
+
+def t_OPCI(t):
+    r'&&'
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Operador Logico')
+    return t
+
+def t_OPCII(t):
+    r'\|\|'
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Operador Logico')
+    return t
+
+def t_COMILLAS(t):
+    r'"|"'
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Simbolos')
+    return t
+
+def t_PARENTIZQ(t):
+    r'\('
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Operador Logico')
+    return t
+
+def t_PARENTDER(t):
+    r'\)'
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Operador Logico')
+    return t
+
+def t_COMA(t):
+    r','
+    # Agregar el símbolo a la tabla
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, t.lexpos, 'Simbolo')
+    return t
 
 def t_NUMEROS(t):
      r'\d+\.?\d+'
@@ -155,5 +275,4 @@ while True:
 generar_bitacora_simbolos(tabla_simbolos)
 
 generar_bitacora(tokens_analizados)
-
 #C:\Users\lopez\OneDrive\Escritorio\UMG\7mo Semestre\Compiladores\ProyectoFinal\tests\prueba2.rb  
