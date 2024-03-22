@@ -3,6 +3,7 @@ import re
 import codecs
 import os
 import sys
+from datetime import datetime
 
 tokens = ['Nombre', 'NUMEROS', 'COMILLAS', 'ESPACIO', 'IGUALACION', 'DIFERENCIA',
           'MML', 'MMR', 'MMIL', 'MMIR', 'OPCI', 'OPCII', 'Asignacion', 'INVALIDO',
@@ -27,14 +28,14 @@ reservadas = {
     'ivid': 'DIVISION',
     'itlum': 'MULTIPLICACION',
     'ton': 'NEGACION',
-    'elbuod':'double',
-    'string':'gnirts'
+    'elbuod':'t_double',
+    'gnirts':'t_string'
 }
 
-# Obtener solo los valores del diccionario reservadas
+# Obtiene solo los valores del diccionario reservadas
 valores_reservadas = list(reservadas.values())
 
-# Concatenar la lista tokens con los valores del diccionario reservadas
+# Concatenar la lista tokens con los valores del diccionario reservadas, es decir añade las PR a la lista de tokens
 tokens += valores_reservadas
 
 tokens = tokens + list(reservadas.values())
@@ -54,7 +55,7 @@ t_ESPACIO = '\s+'
 #t_PARENTDER = r'\)' #Operador Logico
 #t_COMA = r',' #Simbolo
 
-tabla_simbolos = []  # Inicializamos la tabla de símbolos vacía
+tabla_simbolos = []  # Se inicializa la tabla de símbolos vacía
 
 def agregar_simbolo(token, tipo, ambito, visibilidad, tamaño, posicion, rol):
     if tipo == 'TEXTO':
@@ -98,7 +99,7 @@ def t_Nombre(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     # Asigna el tipo según las palabras reservadas
     t.type = reservadas.get(t.value, 'Nombre')
-    # Verifica si el tipo del token es un operador lógico y ajusta el rol
+    # Verifica si el tipo del token es un operador lógico y ajusta el "rol" en la tabla de simbolos
     if t.value in ['sam', 'sonem', 'ivid', 'itlum', 'ton']:
         rol = 'Operadores Comparativos'
     else:
@@ -202,14 +203,25 @@ def t_NUMEROS(t):
      agregar_simbolo(str(t.value), 'NUMEROS', 'Global', 'Publico', 0, t.lexpos, 'Numero')
      return t
 
+#def t_error(t):
+ #   error = f'caracter ilegal "{t.value[0]}" en la linea {t.lineno}, posicion {t.lexpos}'
+    
+ #   with open('bitacora_errores.html', 'a') as f:
+  #      f.write(f'<p>{error}</p>\n')
+  #  print(error)
+  #  t.lexer.skip(1)
+
 def t_error(t):
+    #T.value el caracter no definido, t.lineno numero de linea, t.lexpos posicion del caracter invalido
     error = f'caracter ilegal "{t.value[0]}" en la linea {t.lineno}, posicion {t.lexpos}'
+    #Abre (o crea bitacora_errores.html si no existe), 'a' significa que va a añadir los siguientes errores que se encuentren
     with open('bitacora_errores.html', 'a') as f:
-        f.write(f'<p>{error}</p>\n')
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        f.write(f'<p>{error} - {current_time}</p>\n')
     print(error)
+    #Pasa al siguiente token para que no se quede "trabado" en un bucle
     t.lexer.skip(1)
      
-      
 def generar_bitacora(tokens):
     archivo_bitacora = 'bitacora_tokens.html'
     with open(archivo_bitacora, 'w') as f:
@@ -251,7 +263,6 @@ def buscarFicheros(ruta, extensiones=['.txt', '.rb']):
 
     print(f"Has escogido \"{nombreArchivo}\" \n")
     return nombreArchivo
-
 
 directorio = ''
 archivo = buscarFicheros(directorio, extensiones=['.txt', '.rb'])
