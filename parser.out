@@ -1,0 +1,159 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    Asignacion
+    COMILLAS
+    DIFERENCIA
+    DIVISION
+    ESPACIO
+    INVALIDO
+    MENOS
+    MULTIPLICACION
+    NEGACION
+    OPCI
+    OPCII
+    return
+
+Grammar
+
+Rule 0     S' -> Inicio
+Rule 1     Inicio -> def main APERTINICIO instruccion APERTFIN dec_proc dec_func
+Rule 2     instruccion -> dec_variables instruccion
+Rule 3     instruccion -> dec_if instruccion
+Rule 4     instruccion -> dec_while instruccion
+Rule 5     instruccion -> dec_for instruccion
+Rule 6     instruccion -> dec_do_while instruccion
+Rule 7     instruccion -> llamar_proc instruccion
+Rule 8     instruccion -> llamar_func instruccion
+Rule 9     instruccion -> dec_leer instruccion
+Rule 10    instruccion -> dec_imprimir instruccion
+Rule 11    instruccion -> empty
+Rule 12    dec_variables -> t_string Nombre IGUALACION TEXTO
+Rule 13    dec_variables -> t_double Nombre IGUALACION NUMEROS
+Rule 14    dec_variables -> t_double Nombre IGUALACION NUMEROS operador_m NUMEROS
+Rule 15    dec_variables -> t_double Nombre IGUALACION Nombre
+Rule 16    dec_variables -> t_double Nombre IGUALACION Nombre operador_m NUMEROS
+Rule 17    dec_variables -> t_double Nombre IGUALACION NUMEROS operador_m Nombres
+Rule 18    dec_variables -> t_double Nombre IGUALACION Nombre operador_m Nombre
+Rule 19    dec_variables -> empty
+Rule 20    dec_if -> if opcion_not condicion APERTINICIO instruccion APERTFIN
+Rule 21    dec_if -> if opcion_not condicion APERTINICIO instruccion else instruccion APERTFIN
+Rule 22    dec_while -> while opcion_not condicion APERTINICIO instruccion APERTFIN
+Rule 23    dec_for -> for inicializacion COMA condicion coma autoincremento APERTINICIO instruccion APERTFIN
+Rule 24    inicializacion -> Nombre IGUALACION NUMEROS
+Rule 25    autoincremento -> Nombre MAS MAS
+Rule 26    autoincremento -> Nombre MAS NUMEROS
+Rule 27    dec_do_while -> do instruccion while opcion_not condicion
+Rule 28    dec_proc -> def Nombre recibir APERTINICIO instruccion APERTFIN
+Rule 29    dec_func -> def Nombre recibir APERTINICIO instruccion retorno Nombre APERTFIN
+Rule 30    recibir -> t_string Nombre
+Rule 31    recibir -> t_double Nombre
+Rule 32    llamar_proc -> Nombre PARENTIZQ Nombre PARENTDER
+Rule 33    llamar_func -> Nombre PARENTIZQ Nombre PARENTDER
+Rule 34    dec_leer -> read Nombre
+Rule 35    dec_imprimir -> print Nombre
+Rule 36    dec_imprimir -> print TEXTO
+Rule 37    dec_imprimir -> print concat
+Rule 38    concat -> TEXTO MAS Nombre concat
+Rule 39    concat -> Nombre MAS TEXTO concat
+Rule 40    concat -> empty
+Rule 41    condicion -> expresion comparador expresion comparador condicion
+Rule 42    condicion -> empty
+Rule 43    expresion -> nombre
+Rule 44    expresion -> NUMEROS
+Rule 45    expresion -> TEXTO
+Rule 46    operador_m -> t_sonem
+Rule 47    operador_m -> t_sam
+Rule 48    operador_m -> t_ivid
+Rule 49    operador_m -> t_itlum
+Rule 50    comparador -> igualacion
+Rule 51    comparador -> diferencia
+Rule 52    comparador -> MML
+Rule 53    comparador -> MMR
+Rule 54    comparador -> MMIL
+Rule 55    comparador -> MMIR
+Rule 56    comparador -> OPI
+Rule 57    comparador -> OPII
+Rule 58    comparador -> empty
+Rule 59    empty -> <empty>
+
+Terminals, with rules where they appear
+
+APERTFIN             : 1 20 21 22 23 28 29
+APERTINICIO          : 1 20 21 22 23 28 29
+Asignacion           : 
+COMA                 : 23
+COMILLAS             : 
+DIFERENCIA           : 
+DIVISION             : 
+ESPACIO              : 
+IGUALACION           : 12 13 14 15 16 17 18 24
+INVALIDO             : 
+MAS                  : 25 25 26 38 39
+MENOS                : 
+MMIL                 : 54
+MMIR                 : 55
+MML                  : 52
+MMR                  : 53
+MULTIPLICACION       : 
+NEGACION             : 
+NUMEROS              : 13 14 14 16 17 24 26 44
+Nombre               : 12 13 14 15 15 16 16 17 18 18 18 24 25 26 28 29 29 30 31 32 32 33 33 34 35 38 39
+OPCI                 : 
+OPCII                : 
+PARENTDER            : 32 33
+PARENTIZQ            : 32 33
+TEXTO                : 12 36 38 39 45
+def                  : 1 28 29
+do                   : 27
+else                 : 21
+error                : 
+for                  : 23
+if                   : 20 21
+main                 : 1
+print                : 35 36 37
+read                 : 34
+return               : 
+t_double             : 13 14 15 16 17 18 31
+t_string             : 12 30
+while                : 22 27
+
+Nonterminals, with rules where they appear
+
+Inicio               : 0
+Nombres              : 17
+OPI                  : 56
+OPII                 : 57
+autoincremento       : 23
+coma                 : 23
+comparador           : 41 41
+concat               : 37 38 39
+condicion            : 20 21 22 23 27 41
+dec_do_while         : 6
+dec_for              : 5
+dec_func             : 1
+dec_if               : 3
+dec_imprimir         : 10
+dec_leer             : 9
+dec_proc             : 1
+dec_variables        : 2
+dec_while            : 4
+diferencia           : 51
+empty                : 11 19 40 42 58
+expresion            : 41 41
+igualacion           : 50
+inicializacion       : 23
+instruccion          : 1 2 3 4 5 6 7 8 9 10 20 21 21 22 23 27 28 29
+llamar_func          : 8
+llamar_proc          : 7
+nombre               : 43
+opcion_not           : 20 21 22 27
+operador_m           : 14 16 17 18
+recibir              : 28 29
+retorno              : 29
+t_itlum              : 49
+t_ivid               : 48
+t_sam                : 47
+t_sonem              : 46
+
