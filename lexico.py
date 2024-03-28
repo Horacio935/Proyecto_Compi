@@ -40,22 +40,10 @@ tokens += valores_reservadas
 
 tokens = tokens + list(reservadas.values())
 
-#t_ESPACIO = '\s+'
-#t_Asignacion = r'=' #Operador Comparativo
-#t_MML = r'<' #Operador Comparativo
-#t_MMR = r'>' #Operador Comparativo
-#t_MMIL = r'<=' #Operador Comparativo
-#t_MMIR = r'>=' #Operador Comparativo
-#t_DIFERENCIA = r'!=' #Operador Logico
-#t_IGUALACION = r'==' #Operador Comparativo
-#t_OPCI = r'&&' #Operador Logico
-#t_OPCII = r'\|\|' #Operador Logico
-#t_COMILLAS = r'"|"' #Simbolo
-#t_PARENTIZQ = r'\(' #Operador Logico
-#t_PARENTDER = r'\)' #Operador Logico
-#t_COMA = r',' #Simbolo
-
 tabla_simbolos = []  # Se inicializa la tabla de símbolos vacía
+
+# Crea la tabla hash para almacenar la información de los tokens
+tabla_hash = {}
 
 # Declarar variables globales
 pos_en_linea = 0
@@ -69,6 +57,10 @@ def calcular_numero_linea_real(lexpos, lexer_lexdata, numero_linea):
     global numero_linea_real  # Indicar que se va a modificar la variable global
     lineas_hasta_antes_del_token = lexer_lexdata[:lexpos].count('\n')
     numero_linea_real = numero_linea + lineas_hasta_antes_del_token + 0
+
+# Define la función para agregar un token a la tabla hash
+def agregar_a_tabla_hash(token, tipo, tamaño, posición, rol):
+    tabla_hash[token] = {'Tipo': tipo, 'Tamaño': tamaño, 'Posición': posición, 'Rol': rol}
 
 def agregar_simbolo(token, tipo, ambito, visibilidad, tamaño, posicion, rol):
     if tipo == 'TEXTO':
@@ -105,6 +97,7 @@ def agregar_simbolo(token, tipo, ambito, visibilidad, tamaño, posicion, rol):
         tamaño = len(token)
     elif tipo in valores_reservadas:
         tamaño = len(token)
+    agregar_a_tabla_hash(token, tipo, tamaño, posicion, rol)
     tabla_simbolos.append({'Token': token, 'Tipo': tipo, 'Ambito': ambito, 'Visibilidad': visibilidad,
                            'Tamaño': tamaño, 'Posicion': posicion, 'Rol': rol})
 
@@ -311,6 +304,17 @@ def imprimir_token(t, numero_linea):
     calcular_numero_linea_real(t.lexpos, t.lexer.lexdata, numero_linea)
     # Mostrar el token con el número de línea real y la posición en la línea
     print(f"LexToken({t.type}, '{t.value}', {numero_linea_real}, {pos_en_linea})")
+    # Agregar el token a la tabla hash
+    agregar_a_tabla_hash(t.value, t.type, len(str(t.value)), pos_en_linea, 'Rol')
+    
+    # Verificar si se ha analizado el último token para imprimir la tabla hash
+    if t == tokens_analizados[-1]:
+        imprimir_tabla_hash()
+
+def imprimir_tabla_hash():
+    print("Tabla Hash de Tokens Analizados:")
+    for token, info in tabla_hash.items():
+        print(f"Token: {token}, Tipo: {info['Tipo']}, Tamaño: {info['Tamaño']}, Posición: {info['Posición']}, Rol: {info['Rol']}")
 
 directorio = ''
 archivo = buscarFicheros(directorio, extensiones=['.txt', '.rb'])
@@ -329,8 +333,6 @@ while True:
     if not tok:
         break
     tokens_analizados.append(tok)
-    #if tok.type == 'NEWLINE':
-    #    numero_linea += 1
     imprimir_token(tok, numero_linea)
 
 generar_bitacora_simbolos(tabla_simbolos)
