@@ -60,40 +60,17 @@ def calcular_numero_linea_real(lexpos, lexer_lexdata, numero_linea):
 
 # Define la función para agregar un token a la tabla hash
 def agregar_a_tabla_hash(token, tipo, tamaño, posición, rol):
-    tabla_hash[token] = {'Tipo': tipo, 'Tamaño': tamaño, 'Posición': posición, 'Rol': rol}
+    clave_token = token  # Clave inicialmente igual al token
+    if clave_token in tabla_hash:  # Verificar si el token ya existe en la tabla hash
+        sufijo_num = 2  # Inicializar el sufijo numérico en 2
+        while f"{token}_{sufijo_num}" in tabla_hash:  # Buscar el número más bajo disponible
+            sufijo_num += 1
+        clave_token = f"{token}_{sufijo_num}"  # Agregar el sufijo numérico al token repetido
+    tabla_hash[clave_token] = {'Tipo': tipo, 'Tamaño': tamaño, 'Posición': posición, 'Rol': rol}
+
 
 def agregar_simbolo(token, tipo, ambito, visibilidad, tamaño, posicion, rol):
-    if tipo == 'TEXTO':
-        tamaño = len(token)
-    elif tipo == 'NUMEROS':
-        tamaño = len(str(token))  # Convertir el número a cadena y calcular su longitud
-    elif tipo == 'Nombre':
-        tamaño = len(token)
-    elif tipo == 'Asignacion':
-        tamaño = len(token)
-    elif tipo == 'MML':
-        tamaño = len(token)
-    elif tipo == 'MMR':
-        tamaño = len(token)
-    elif tipo == 'MMIL':
-        tamaño = len(token)
-    elif tipo == 'MMIR':
-        tamaño = len(token)
-    elif tipo == 'DIFERENCIA':
-        tamaño = len(token)
-    elif tipo == 'IGUALACION':
-        tamaño = len(token)
-    elif tipo == 'OPCI':
-        tamaño = len(token)
-    elif tipo == 'OPCII':
-        tamaño = len(token)
-    elif tipo == 'COMILLAS':
-        tamaño = len(token)
-    elif tipo == 'PARENTIZQ':
-        tamaño = len(token)
-    elif tipo == 'PARENTDER':
-        tamaño = len(token)
-    elif tipo == 'COMA':
+    if tipo in ['TEXTO', 'NUMEROS', 'Nombre', 'Asignacion', 'MML', 'MMR', 'MMIL', 'MMIR', 'DIFERENCIA', 'IGUALACION', 'OPCI', 'OPCII', 'COMILLAS', 'PARENTIZQ', 'PARENTDER', 'COMA'] + valores_reservadas:
         tamaño = len(token)
     elif tipo in valores_reservadas:
         tamaño = len(token)
@@ -108,15 +85,12 @@ def t_Nombre(t):
     # Verifica si el tipo del token es un operador lógico y ajusta el "rol" en la tabla de simbolos
     if t.value in ['sam', 'sonem', 'ivid', 'itlum', 'ton']:
         rol = 'Operadores Comparativos'
-    else:
-        rol = 'Identificador'
-    if t.value in ['niam', 'fi', 'esle', 'elihw', 'rof' ,'od' ,'ranroter' ,'rimirpmi' ,'reel' ,'fed' ,'oicini' ,'nif' ,'elbuod' ,'gnirts']:
+    elif t.value in ['niam', 'fi', 'esle', 'elihw', 'rof' ,'od' ,'ranroter' ,'rimirpmi' ,'reel' ,'fed' ,'oicini' ,'nif' ,'elbuod' ,'gnirts']:
         rol = 'Palabra Reservada'
     else:
         rol = 'Identificador'
 
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-
     agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, rol)
     return t
 
@@ -134,6 +108,27 @@ def t_TEXTO(t):
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
     agregar_simbolo(t.value, 'TEXTO', 'Global', 'Publico', 0, pos_en_linea, 'Texto')
     return t 
+
+def t_MMIL(t):
+    r'<='
+    # Agregar el símbolo a la tabla
+    calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Comparativo')
+    return t
+
+def t_MMIR(t):
+    r'>='
+    # Agregar el símbolo a la tabla
+    calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Comparativo')
+    return t
+
+def t_IGUALACION(t):
+    r'=='
+    # Agregar el símbolo a la tabla
+    calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
+    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Comparativo')
+    return t
 
 def t_Asignacion(t):
     r'='
@@ -156,32 +151,11 @@ def t_MMR(t):
     agregar_simbolo(t.value, t.type, 'Local', 'Privado', 0, pos_en_linea, 'Operador Comparativo')
     return t
 
-def t_MMIL(t):
-    r'<='
-    # Agregar el símbolo a la tabla
-    calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Comparativo')
-    return t
-
-def t_MMIR(t):
-    r'>='
-    # Agregar el símbolo a la tabla
-    calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Comparativo')
-    return t
-
 def t_DIFERENCIA(t):
     r'!='
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
     agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Logico')
-    return t
-
-def t_IGUALACION(t):
-    r'=='
-    # Agregar el símbolo a la tabla
-    calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Comparativo')
     return t
 
 def t_OPCI(t):
@@ -305,16 +279,14 @@ def imprimir_token(t, numero_linea):
     # Mostrar el token con el número de línea real y la posición en la línea
     print(f"LexToken({t.type}, '{t.value}', {numero_linea_real}, {pos_en_linea})")
     # Agregar el token a la tabla hash
-    agregar_a_tabla_hash(t.value, t.type, len(str(t.value)), pos_en_linea, 'Rol')
-    
-    # Verificar si se ha analizado el último token para imprimir la tabla hash
-    if t == tokens_analizados[-1]:
-        imprimir_tabla_hash()
+    #agregar_a_tabla_hash(t.value, t.type, len(str(t.value)), pos_en_linea, 'Rol')
 
 def imprimir_tabla_hash():
     print("Tabla Hash de Tokens Analizados:")
+    index = 1
     for token, info in tabla_hash.items():
-        print(f"Token: {token}, Tipo: {info['Tipo']}, Tamaño: {info['Tamaño']}, Posición: {info['Posición']}, Rol: {info['Rol']}")
+        print(f"{index}. Token: {token}, Tipo: {info['Tipo']}, Tamaño: {info['Tamaño']}, Posición: {info['Posición']}, Rol: {info['Rol']}")
+        index += 1
 
 directorio = ''
 archivo = buscarFicheros(directorio, extensiones=['.txt', '.rb'])
@@ -333,7 +305,14 @@ while True:
     if not tok:
         break
     tokens_analizados.append(tok)
-    imprimir_token(tok, numero_linea)
+    #imprimir_token(tok, numero_linea)
+# Llama a la función para imprimir cada token
+for token in tokens_analizados:
+    imprimir_token(token, numero_linea)
+
+# Verifica si se han analizado tokens y luego imprime la tabla hash
+if tokens_analizados:
+    imprimir_tabla_hash()
 
 generar_bitacora_simbolos(tabla_simbolos)
 
