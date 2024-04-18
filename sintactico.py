@@ -2,290 +2,264 @@ import ply.yacc as yacc
 import os
 import codecs
 import re
+#from lexico import generar_tokens
 from lexico import tokens
-from sys import stdin
+from sys import stdin   
+from datetime import datetime
 
 precedencia = {
-    #('left', 'Instruccion'),
-    ('left', 't_sonem'),
-    ('left', 't_sam'),
-    ('left', 't_ivid'),
-    ('left', 't_itlum')
+    
+    ('left', 'instruccion'),
+    ('left', 'PRINT'),
+    ('left', 'MENOS'),
+    ('left', 'MAS'),
+    ('left', 'DIVISION'),
+    ('left', 'MULTIPLICACION'),
+    ('left', 'NOMBRE'),
+    ('right', 'WHILE'),
+    ('right','dec_proc','dec_func')
 }
 
-
 def p_Inicio(p):
-    '''Inicio : def main APERTINICIO instruccion APERTFIN dec_proc dec_func'''
-    p[0] = p[1], p[2], p[3], p[4], p[5], p[6], p[7]
-
-    ##INSTRUCCIONES
-def p_instruccion1(p):
-    '''instruccion : dec_variables instruccion'''
-    p[0] = p[1], p[2]
-    
-def p_instruccion2(p):
-    '''instruccion : dec_if instruccion'''
-    p[0] = p[1], p[2]
-    
-def p_instruccion3(p):
-    '''instruccion : dec_while instruccion'''
-    p[0] = p[1], p[2]
-
-def p_instruccion4(p):
-    '''instruccion : dec_for instruccion'''
-    p[0] = p[1], p[2]
-
-def p_instruccion5(p):
-    '''instruccion : dec_do_while instruccion'''
-    p[0] = p[1], p[2]
-
-def p_instruccion6(p):
-    '''instruccion : llamar_proc instruccion'''
-    p[0] = p[1], p[2]
-
-def p_instruccion7(p):
-    '''instruccion : llamar_func instruccion'''
-    p[0] = p[1], p[2]
-
-def p_instruccion8(p):
-    '''instruccion : dec_leer instruccion'''
-    p[0] = p[1], p[2]
-
-def p_instruccion9(p):
-    '''instruccion : dec_imprimir instruccion'''
-    p[0] = p[1], p[2]
-
-def p_instruccion10(p):
-    '''instruccion : empty'''
-    p[0] = p[1]
-    
-
-
-    ##VARIABLES
-def p_dec_variables1(p):
-    '''dec_variables : t_string Nombre IGUALACION TEXTO'''
+    '''Inicio : DEF MAIN APERTINICIO instruccion APERTFIN dec_proc dec_func'''
     p[0] = p[1], p[2], p[3], p[4]
-
-def p_dec_variables2(p):
-    '''dec_variables : t_double Nombre IGUALACION NUMEROS'''
-    p[0] = p[1], p[2], p[3], p[4]
-
-def p_dec_variables3(p):
-    '''dec_variables : t_double Nombre IGUALACION NUMEROS operador_m NUMEROS'''
-    p[0] = p[1], p[2], p[3], p[4], p[5], p[6]
-    
-def p_dec_variables4(p):
-    '''dec_variables : t_double Nombre IGUALACION Nombre'''
-    p[0] = p[1], p[2], p[3], p[4]
-
-def p_dec_variables5(p):
-    '''dec_variables : t_double Nombre IGUALACION Nombre operador_m NUMEROS'''
-    p[0] = p[1], p[2], p[3], p[4], p[5], p[6]
-
-def p_dec_variables6(p):
-    '''dec_variables : t_double Nombre IGUALACION NUMEROS operador_m Nombres'''
-    p[0] = p[1], p[2], p[3], p[4], p[5], p[6]
-
-#def p_dec_variables7(p):
-#    '''dec_variables : t_double Nombre IGUALACION Nombre operador_m NUMEROS'''
-#    p[0] = p[1], p[2], p[3], p[4], p[5], p[6]
-
-def p_dec_variables8(p):
-    '''dec_variables : t_double Nombre IGUALACION Nombre operador_m Nombre'''
-    p[0] = p[1], p[2], p[3], p[4], p[5], p[6]
-
-def p_dec_variables9(p):
-    '''dec_variables : empty'''
-    p[0] = p[1]
     
 
-    ##DECLARACION DE IF
-def p_dec_if1(p):
-    '''dec_if : if opcion_not condicion APERTINICIO instruccion APERTFIN'''
-    p[0] = p[1], p[2], p[3], p[4], p[5], p[6]
+def p_instruccion(p):
+    '''instruccion : dec_variables instruccion
+                    | dec_if instruccion
+                    | dec_while instruccion
+                    | dec_for instruccion
+                    | dec_do_while instruccion
+                    | llamar_proc_func instruccion
+                    | dec_leer instruccion
+                    | dec_imprimir instruccion
+                    | empty'''
+    if len(p) == 3:
+        p[0] = p[1], p[2]
+    else:
+        p[0] = p[1]
+        
+def p_dec_variables(p):
+    '''dec_variables : T_STRING NOMBRE ASIGNACION TEXTO
+                     | T_DOUBLE NOMBRE ASIGNACION NUMEROS
+                     | T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+                     | T_DOUBLE NOMBRE ASIGNACION NOMBRE
+                     | T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+                     | T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+                     | T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE'''
+                     #| empty'''
+    p[0] = p[1], p[2], p[3], *p[4:]
+    
 
-def p_dec_if2(p):
-    '''dec_if : if opcion_not condicion APERTINICIO instruccion else instruccion APERTFIN'''
-    p[0] = p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8]
+def p_dec_if(p):
+    '''dec_if : IF opcion_not condicion APERTINICIO instruccion APERTFIN
+              | IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN'''
+#    p[0] = (p[1], p[2], p[3], p[4], p[5], *p[6:]) if len(p) == 7 else p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8]
+    if len(p) == 6:
+        p[0] = p[1], p[2], p[3], p[4], p[5]
+    else:
+        p[0] = p[1], p[2], p[3], p[4], p[5], p[6]
 
-    ##DECLARACION DE WHILE
+
 def p_dec_while(p):
-    '''dec_while : while opcion_not condicion APERTINICIO instruccion APERTFIN'''
+    '''dec_while : WHILE opcion_not condicion APERTINICIO instruccion APERTFIN'''
     p[0] = p[1], p[2], p[3], p[4], p[5], p[6]
-
-
-    ##DECLARACION FOR
+    
+    
 def p_dec_for(p):
-    '''dec_for : for inicializacion COMA condicion coma autoincremento APERTINICIO instruccion APERTFIN'''
+    '''dec_for : FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN'''
     p[0] = p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9]
 
 def p_inicializacion_for(p):
-    '''inicializacion : Nombre IGUALACION NUMEROS'''
+    '''inicializacion : NOMBRE ASIGNACION NUMEROS'''
     p[0] = p[1], p[2], p[3]
 
-def p_autoincremento_for1(p):
-    '''autoincremento : Nombre MAS MAS'''
-    p[0] = p[1], p[2], p[3]
-
-def p_autoincremento_for2(p):
-    '''autoincremento : Nombre MAS NUMEROS'''
-    p[0] = p[1], p[2], p[3]
-
-
+def p_autoincremento_for(p):
+    '''autoincremento : NOMBRE MAS MAS
+                      | NOMBRE MAS NUMEROS'''
+    p[0] = p[1], p[2], p[3] if len(p) == 4 else p[1], p[2], p[3]
+    
     ##DECLARACION DO-WHILE
 def p_dec_do_while(p):
-    '''dec_do_while : do instruccion while opcion_not condicion'''
+    '''dec_do_while : DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion '''
     p[0] = p[1], p[2], p[3], p[4], p[5]
-
-    ##DECLARACION PROCEDIMIENTO Y FUNCION
+    
+    
 def p_dec_proc(p):
-    '''dec_proc : def Nombre recibir APERTINICIO instruccion APERTFIN'''
-    p[0] = p[1], p[2], p[3], p[4], p[5], p[6]
+    '''dec_proc : DEF NOMBRE recibir APERTINICIO instruccion APERTFIN
+                | empty'''
+    if len(p) == 7:
+        p[0] = p[1], p[2], p[3], p[4], p[5], p[6]
+    else:
+        p[0] = p[1]
     
 def p_dec_func(p):
-    '''dec_func : def Nombre recibir APERTINICIO instruccion retorno Nombre APERTFIN'''
-    p[0] = p[1], p[2], p[3], p[4], p[5], p[6]
+    '''dec_func : DEF NOMBRE recibir APERTINICIO instruccion RETURN NOMBRE APERTFIN
+                | empty'''
+    if len(p) == 8:
+        p[0] = p[1], p[2], p[3], p[4], p[5], p[6], p[7]
+    else:
+        p[0] = p[1]
 
-def p_recibir_proc_func1(p):
-    '''recibir : t_string Nombre'''
+def p_recibir_proc_func(p):
+    '''recibir : T_STRING NOMBRE
+               | T_DOUBLE NOMBRE'''
     p[0] = p[1], p[2]
-
-def p_recibir_proc_func2(p):
-    '''recibir : t_double Nombre'''
-    p[0] = p[1], p[2]
-
 
     ##LLAMAR PROCEDIMIENTO Y FUNCION
-def p_llamar_proc(p):
-    '''llamar_proc : Nombre PARENTIZQ Nombre PARENTDER'''
-    p[0] = p[1], p[2], p[4], p[4]
-
-def p_llamar_func(p):
-    '''llamar_func : Nombre PARENTIZQ Nombre PARENTDER'''
-    p[0] = p[1], p[2], p[4], p[4]
-
-
-    ##LEER Y ESCRIBIR
+def p_llamar_proc_func(p):
+    '''llamar_proc_func : NOMBRE IGUALACION NOMBRE'''
+    p[0] = p[1], p[2]
+    #, p[3], p[4]
+    
+    
+        ##LEER Y ESCRIBIR
 def p_dec_leer(p):
-    '''dec_leer : read Nombre'''
-    p[0] = p[1], p[2]
-
-def p_dec_imprimir1(p):
-    '''dec_imprimir : print Nombre'''
+    '''dec_leer : READ NOMBRE'''
     p[0] = p[1], p[2]
     
-def p_dec_imprimir2(p):
-    '''dec_imprimir : print TEXTO'''
-    p[0] = p[1], p[2]
     
-def p_dec_imprimir3(p):
-    '''dec_imprimir : print concat'''
-    p[0] = p[1], p[2]
+def p_dec_imprimir(p):
+    '''dec_imprimir : T_PRINT ASIGNACION expresion
+                    | T_PRINT ASIGNACION expresion MAS expresion'''
+    if len(p) == 4:
+        p[0] = p[1], p[2], p[3]
+    else:
+        p[0] = p[1], p[2], p[3], p[4], p[5]
+#def p_dec_imprimir(p):
+#    '''dec_imprimir : PRINT ASIGNACION imprimir'''
+#    p[0] = p[1], p[2], p[3]
 
-def p_concatenacion1(p):
-    '''concat : TEXTO MAS Nombre concat'''
-    p[0] = p[1], p[2], p[3], p[4]
-
-def p_concatenacion2(p):
-    '''concat : Nombre MAS TEXTO concat'''
-    p[0] = p[1], p[2], p[3], p[4]
-
-def p_concatenacion3(p):
-    '''concat : empty'''
-    p[0] = p[1]
-    
-
-
-    ##CONDICION
-def p_condicion1(p):
-    '''condicion : expresion comparador expresion comparador condicion'''
-    p[0] = p[1], p[2], p[3], p[4], p[5]
-
-def p_condicion2(p):
-    '''condicion : empty'''
-    p[0] = p[1]
-    pass
-
-def p_expresion1(p):
-    '''expresion : nombre'''
-    p[0] = p[1]
-
-def p_expresion2(p):
-    '''expresion : NUMEROS'''
-    p[0] = p[1]
-
-def p_expresion3(p):
-    '''expresion : TEXTO'''
-    p[0] = p[1]
-
-    ##Operadores Matematicos
-def p_operadorM1(p):
-    '''operador_m : t_sonem'''
-    p[0] = p[1]
-    
-def p_operadorM2(p):
-    '''operador_m : t_sam'''
-    p[0] = p[1]
-    
-def p_operadorM3(p):
-    '''operador_m : t_ivid'''
-    p[0] = p[1]
-    
-def p_operadorM4(p):
-    '''operador_m : t_itlum''' 
-    p[0] = p[1]           
+#def p_imprimir(p):
+#    '''imprimir : NOMBRE
+#                | TEXTO
+##                | NOMBRE MAS TEXTO imprimir
+#                | TEXTO MAS NOMBRE imprimir
+#                | empty'''
+#    if len(p) == 2:
+#        p[0] = p[1]
+#    elif len(p) == 4:
+##        if p[2].lower() == 'sam': # Verifica si 'MAS' es igual a 'mas'
+#            p[0] = (p[1], p[2], p[3], p[4])  # Utiliza 'MAS' tal cual
+#        else:
+#            p[0] = (p[3], p[2], p[1])
     
     
-    ##cOMPARADORES
-def p_comparador1(p):
-    '''comparador : igualacion'''
-    p[0] = p[1]
-
-def p_comparador2(p):
-    '''comparador : diferencia'''
-    p[0] = p[1]
-
-def p_comparador3(p):
-    '''comparador : MML'''
-    p[0] = p[1]
-
-def p_comparador4(p):
-    '''comparador : MMR'''
-    p[0] = p[1]
-    
-def p_comparador5(p):
-    '''comparador : MMIL'''
-    p[0] = p[1]
-
-def p_comparador6(p):
-    '''comparador : MMIR'''
-    p[0] = p[1]
-
-def p_comparador7(p):
-    '''comparador : OPI'''
-    p[0] = p[1]
-
-def p_comparador8(p):
-    '''comparador : OPII'''
-    p[0] = p[1]    
-    
-def p_comparador9(p):
-    '''comparador : empty'''
+def p_operador_m(p):
+    '''operador_m : MENOS
+                  | MAS
+                  | DIVISION
+                  | MULTIPLICACION'''
     p[0] = p[1]
     
     
+def p_condicion(p):
+    '''condicion : expresion comparador expresion comparador condicion
+                   | empty'''
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = p[1], p[2], p[3], p[4], p[5]
+        
+
+def p_expresion(p):
+    '''expresion : TEXTO
+                  | NUMEROS
+                  | NOMBRE'''
+    p[0] = p[1]
+    
+    
+def p_comparador(p):
+    '''comparador : IGUALACION
+                    | DIFERENCIA
+                    | MML
+                    | MMR
+                    | MMIL
+                    | MMIR
+                    | OPCI
+                    | OPCII
+                    | empty'''
+    p[0] = p[1]
+    
+    
+def p_opcion_not(p):
+    '''opcion_not : NEGACION
+                    | empty'''
+    p[0] = p[1]
     
 ##Epsilon
 def p_empty(p):
     'empty :'
-    p[0] = p[1]
+    p[0]
     pass
 
-
 ##Erro
+def contar_lineas_hasta_posicion(texto, posicion):
+    # Contador de líneas
+    num_lineas = 1
+    # Iterar sobre el texto hasta la posición del error
+    for i in range(posicion):
+        if texto[i] == '\n':
+            num_lineas += 1
+    return num_lineas
+
 def p_error(p):
-    print("Error de sintaxis", p)
-    
+    error_message = ""
+    if p:
+        # Obtener el número de línea en base a la posición del token
+        num_linea = contar_lineas_hasta_posicion(p.lexer.lexdata, p.lexpos)
+        error_message = f"Error de sintaxis en línea {num_linea}: No se esperaba el token '{p.value}'"
+        print(error_message)
+    else:
+        error_message = "Error de sintaxis: La entrada está incompleta o incorrecta"
+        print(error_message)
+    # Obtener la fecha y hora actual
+    current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # Generar el contenido HTML para el error dentro de una fila de la tabla
+    error_html = f"<tr><td>{current_datetime}</td><td>No se esperaba el token '{p.value}'</td><td>{num_linea}</td></tr>"
+    # Verificar si el archivo HTML ya existe
+    file_exists = os.path.isfile("bitacora_errores_sin.html")
+    # Si el archivo no existe, escribir el contenido inicial del HTML con la tabla
+    if not file_exists:
+        with open("bitacora_errores_sin.html", "w") as error_file:
+            error_file.write("<html><head><title>Bitácora de Errores Sintácticos</title></head><body><table border='1'><tr><th>Fecha y Hora</th><th>Error Sintáctico</th><th>Numero de linea</th></tr>")
+   
+    # Escribir el contenido HTML en el archivo bitacora_errores_sin.html
+    with open("bitacora_errores_sin.html", "a") as error_file:
+        error_file.write(error_html)
+
+# Agregar el cierre de la tabla y del HTML al final del programa
+def cerrar_bitacora():
+    with open("bitacora_errores_sin.html", "a") as error_file:
+        error_file.write("</table></body></html>")
+
+#def buscar_archivo():
+#    respuesta = False
+
+#    ot respuesta:
+#        nombre_archivo = input('\nRuta completa del archivo: ')
+#        if os.path.exists(nombre_archivo):
+#            respuesta = True
+#        else:
+#            print("Ruta de archivo inválida. Inténtalo de nuevo.")
+
+#    print(f"Has escogido \"{nombre_archivo}\" \n")
+#    return nombre_archivo
+
+#directorio = ''
+#archivo = buscar_archivo()
+#with codecs.open(archivo, "r", "utf-8") as fp:
+#    cadena = fp.read()
+
+#tokens_analizados = generar_tokens(cadena)
+
+
+
+#parser = yacc.yacc()
+#resultado = parser.parse(cadena)
+
+#print(resultado)
 
 def buscarFicheros(ruta, extensiones=['.txt', '.rb']):
     ficheros = []
@@ -315,8 +289,9 @@ fp = codecs.open(test, "r", "utf-8")
 cadena = fp.read()
 fp.close()
 
-parser = yacc.yacc()
-resultado = parser.pase(cadena)
-
+parser = yacc.yacc('SLR')
+resultado = parser.parse(cadena)
 print (resultado)
 
+
+#C:\Users\lopez\OneDrive\Escritorio\UMG\7mo Semestre\Compiladores\ProyectoFinal\tests\prueba1.rb  

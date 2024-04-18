@@ -2,158 +2,3288 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    Asignacion
     COMILLAS
-    DIFERENCIA
-    DIVISION
     ESPACIO
     INVALIDO
-    MENOS
-    MULTIPLICACION
-    NEGACION
-    OPCI
-    OPCII
-    return
+    PARENTDER
+    PARENTIZQ
 
 Grammar
 
 Rule 0     S' -> Inicio
-Rule 1     Inicio -> def main APERTINICIO instruccion APERTFIN dec_proc dec_func
+Rule 1     Inicio -> DEF MAIN APERTINICIO instruccion APERTFIN dec_proc dec_func
 Rule 2     instruccion -> dec_variables instruccion
 Rule 3     instruccion -> dec_if instruccion
 Rule 4     instruccion -> dec_while instruccion
 Rule 5     instruccion -> dec_for instruccion
 Rule 6     instruccion -> dec_do_while instruccion
-Rule 7     instruccion -> llamar_proc instruccion
-Rule 8     instruccion -> llamar_func instruccion
-Rule 9     instruccion -> dec_leer instruccion
-Rule 10    instruccion -> dec_imprimir instruccion
-Rule 11    instruccion -> empty
-Rule 12    dec_variables -> t_string Nombre IGUALACION TEXTO
-Rule 13    dec_variables -> t_double Nombre IGUALACION NUMEROS
-Rule 14    dec_variables -> t_double Nombre IGUALACION NUMEROS operador_m NUMEROS
-Rule 15    dec_variables -> t_double Nombre IGUALACION Nombre
-Rule 16    dec_variables -> t_double Nombre IGUALACION Nombre operador_m NUMEROS
-Rule 17    dec_variables -> t_double Nombre IGUALACION NUMEROS operador_m Nombres
-Rule 18    dec_variables -> t_double Nombre IGUALACION Nombre operador_m Nombre
-Rule 19    dec_variables -> empty
-Rule 20    dec_if -> if opcion_not condicion APERTINICIO instruccion APERTFIN
-Rule 21    dec_if -> if opcion_not condicion APERTINICIO instruccion else instruccion APERTFIN
-Rule 22    dec_while -> while opcion_not condicion APERTINICIO instruccion APERTFIN
-Rule 23    dec_for -> for inicializacion COMA condicion coma autoincremento APERTINICIO instruccion APERTFIN
-Rule 24    inicializacion -> Nombre IGUALACION NUMEROS
-Rule 25    autoincremento -> Nombre MAS MAS
-Rule 26    autoincremento -> Nombre MAS NUMEROS
-Rule 27    dec_do_while -> do instruccion while opcion_not condicion
-Rule 28    dec_proc -> def Nombre recibir APERTINICIO instruccion APERTFIN
-Rule 29    dec_func -> def Nombre recibir APERTINICIO instruccion retorno Nombre APERTFIN
-Rule 30    recibir -> t_string Nombre
-Rule 31    recibir -> t_double Nombre
-Rule 32    llamar_proc -> Nombre PARENTIZQ Nombre PARENTDER
-Rule 33    llamar_func -> Nombre PARENTIZQ Nombre PARENTDER
-Rule 34    dec_leer -> read Nombre
-Rule 35    dec_imprimir -> print Nombre
-Rule 36    dec_imprimir -> print TEXTO
-Rule 37    dec_imprimir -> print concat
-Rule 38    concat -> TEXTO MAS Nombre concat
-Rule 39    concat -> Nombre MAS TEXTO concat
-Rule 40    concat -> empty
-Rule 41    condicion -> expresion comparador expresion comparador condicion
-Rule 42    condicion -> empty
-Rule 43    expresion -> nombre
-Rule 44    expresion -> NUMEROS
-Rule 45    expresion -> TEXTO
-Rule 46    operador_m -> t_sonem
-Rule 47    operador_m -> t_sam
-Rule 48    operador_m -> t_ivid
-Rule 49    operador_m -> t_itlum
-Rule 50    comparador -> igualacion
-Rule 51    comparador -> diferencia
-Rule 52    comparador -> MML
-Rule 53    comparador -> MMR
-Rule 54    comparador -> MMIL
-Rule 55    comparador -> MMIR
-Rule 56    comparador -> OPI
-Rule 57    comparador -> OPII
-Rule 58    comparador -> empty
-Rule 59    empty -> <empty>
+Rule 7     instruccion -> llamar_proc_func instruccion
+Rule 8     instruccion -> dec_leer instruccion
+Rule 9     instruccion -> dec_imprimir instruccion
+Rule 10    instruccion -> empty
+Rule 11    dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO
+Rule 12    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS
+Rule 13    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+Rule 14    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE
+Rule 15    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+Rule 16    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+Rule 17    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+Rule 18    dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN
+Rule 19    dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+Rule 20    dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+Rule 21    dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+Rule 22    inicializacion -> NOMBRE ASIGNACION NUMEROS
+Rule 23    autoincremento -> NOMBRE MAS MAS
+Rule 24    autoincremento -> NOMBRE MAS NUMEROS
+Rule 25    dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+Rule 26    dec_proc -> DEF NOMBRE recibir APERTINICIO instruccion APERTFIN
+Rule 27    dec_proc -> empty
+Rule 28    dec_func -> DEF NOMBRE recibir APERTINICIO instruccion RETURN NOMBRE APERTFIN
+Rule 29    dec_func -> empty
+Rule 30    recibir -> T_STRING NOMBRE
+Rule 31    recibir -> T_DOUBLE NOMBRE
+Rule 32    llamar_proc_func -> NOMBRE IGUALACION NOMBRE
+Rule 33    dec_leer -> READ NOMBRE
+Rule 34    dec_imprimir -> T_PRINT ASIGNACION expresion
+Rule 35    dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion
+Rule 36    operador_m -> MENOS
+Rule 37    operador_m -> MAS
+Rule 38    operador_m -> DIVISION
+Rule 39    operador_m -> MULTIPLICACION
+Rule 40    condicion -> expresion comparador expresion comparador condicion
+Rule 41    condicion -> empty
+Rule 42    expresion -> TEXTO
+Rule 43    expresion -> NUMEROS
+Rule 44    expresion -> NOMBRE
+Rule 45    comparador -> IGUALACION
+Rule 46    comparador -> DIFERENCIA
+Rule 47    comparador -> MML
+Rule 48    comparador -> MMR
+Rule 49    comparador -> MMIL
+Rule 50    comparador -> MMIR
+Rule 51    comparador -> OPCI
+Rule 52    comparador -> OPCII
+Rule 53    comparador -> empty
+Rule 54    opcion_not -> NEGACION
+Rule 55    opcion_not -> empty
+Rule 56    empty -> <empty>
 
 Terminals, with rules where they appear
 
-APERTFIN             : 1 20 21 22 23 28 29
-APERTINICIO          : 1 20 21 22 23 28 29
-Asignacion           : 
-COMA                 : 23
+APERTFIN             : 1 18 19 20 21 25 26 28
+APERTINICIO          : 1 18 19 20 21 25 26 28
+ASIGNACION           : 11 12 13 14 15 16 17 22 34 35
+COMA                 : 21 21
 COMILLAS             : 
-DIFERENCIA           : 
-DIVISION             : 
+DEF                  : 1 26 28
+DIFERENCIA           : 46
+DIVISION             : 38
+DO                   : 25
+ELSE                 : 19
 ESPACIO              : 
-IGUALACION           : 12 13 14 15 16 17 18 24
+FOR                  : 21
+IF                   : 18 19
+IGUALACION           : 32 45
 INVALIDO             : 
-MAS                  : 25 25 26 38 39
-MENOS                : 
-MMIL                 : 54
-MMIR                 : 55
-MML                  : 52
-MMR                  : 53
-MULTIPLICACION       : 
-NEGACION             : 
-NUMEROS              : 13 14 14 16 17 24 26 44
-Nombre               : 12 13 14 15 15 16 16 17 18 18 18 24 25 26 28 29 29 30 31 32 32 33 33 34 35 38 39
-OPCI                 : 
-OPCII                : 
-PARENTDER            : 32 33
-PARENTIZQ            : 32 33
-TEXTO                : 12 36 38 39 45
-def                  : 1 28 29
-do                   : 27
-else                 : 21
+MAIN                 : 1
+MAS                  : 23 23 24 35 37
+MENOS                : 36
+MMIL                 : 49
+MMIR                 : 50
+MML                  : 47
+MMR                  : 48
+MULTIPLICACION       : 39
+NEGACION             : 54
+NOMBRE               : 11 12 13 14 14 15 15 16 16 17 17 17 22 23 24 26 28 28 30 31 32 32 33 44
+NUMEROS              : 12 13 13 15 16 22 24 43
+OPCI                 : 51
+OPCII                : 52
+PARENTDER            : 
+PARENTIZQ            : 
+READ                 : 33
+RETURN               : 28
+TEXTO                : 11 42
+T_DOUBLE             : 12 13 14 15 16 17 31
+T_PRINT              : 34 35
+T_STRING             : 11 30
+WHILE                : 20 25
 error                : 
-for                  : 23
-if                   : 20 21
-main                 : 1
-print                : 35 36 37
-read                 : 34
-return               : 
-t_double             : 13 14 15 16 17 18 31
-t_string             : 12 30
-while                : 22 27
 
 Nonterminals, with rules where they appear
 
 Inicio               : 0
-Nombres              : 17
-OPI                  : 56
-OPII                 : 57
-autoincremento       : 23
-coma                 : 23
-comparador           : 41 41
-concat               : 37 38 39
-condicion            : 20 21 22 23 27 41
+autoincremento       : 21
+comparador           : 40 40
+condicion            : 18 19 20 21 25 40
 dec_do_while         : 6
 dec_for              : 5
 dec_func             : 1
 dec_if               : 3
-dec_imprimir         : 10
-dec_leer             : 9
+dec_imprimir         : 9
+dec_leer             : 8
 dec_proc             : 1
 dec_variables        : 2
 dec_while            : 4
-diferencia           : 51
-empty                : 11 19 40 42 58
-expresion            : 41 41
-igualacion           : 50
-inicializacion       : 23
-instruccion          : 1 2 3 4 5 6 7 8 9 10 20 21 21 22 23 27 28 29
-llamar_func          : 8
-llamar_proc          : 7
-nombre               : 43
-opcion_not           : 20 21 22 27
-operador_m           : 14 16 17 18
-recibir              : 28 29
-retorno              : 29
-t_itlum              : 49
-t_ivid               : 48
-t_sam                : 47
-t_sonem              : 46
+empty                : 10 27 29 41 53 55
+expresion            : 34 35 35 40 40
+inicializacion       : 21
+instruccion          : 1 2 3 4 5 6 7 8 9 18 19 19 20 21 25 26 28
+llamar_proc_func     : 7
+opcion_not           : 18 19 20 25
+operador_m           : 13 15 16 17
+recibir              : 26 28
 
+Parsing method: SLR
+
+state 0
+
+    (0) S' -> . Inicio
+    (1) Inicio -> . DEF MAIN APERTINICIO instruccion APERTFIN dec_proc dec_func
+
+    DEF             shift and go to state 2
+
+    Inicio                         shift and go to state 1
+
+state 1
+
+    (0) S' -> Inicio .
+
+
+
+state 2
+
+    (1) Inicio -> DEF . MAIN APERTINICIO instruccion APERTFIN dec_proc dec_func
+
+    MAIN            shift and go to state 3
+
+
+state 3
+
+    (1) Inicio -> DEF MAIN . APERTINICIO instruccion APERTFIN dec_proc dec_func
+
+    APERTINICIO     shift and go to state 4
+
+
+state 4
+
+    (1) Inicio -> DEF MAIN APERTINICIO . instruccion APERTFIN dec_proc dec_func
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    instruccion                    shift and go to state 5
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 5
+
+    (1) Inicio -> DEF MAIN APERTINICIO instruccion . APERTFIN dec_proc dec_func
+
+    APERTFIN        shift and go to state 24
+
+
+state 6
+
+    (2) instruccion -> dec_variables . instruccion
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    dec_variables                  shift and go to state 6
+    instruccion                    shift and go to state 25
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 7
+
+    (3) instruccion -> dec_if . instruccion
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    dec_if                         shift and go to state 7
+    instruccion                    shift and go to state 26
+    dec_variables                  shift and go to state 6
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 8
+
+    (4) instruccion -> dec_while . instruccion
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    dec_while                      shift and go to state 8
+    instruccion                    shift and go to state 27
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 9
+
+    (5) instruccion -> dec_for . instruccion
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    dec_for                        shift and go to state 9
+    instruccion                    shift and go to state 28
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 10
+
+    (6) instruccion -> dec_do_while . instruccion
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    dec_do_while                   shift and go to state 10
+    instruccion                    shift and go to state 29
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 11
+
+    (7) instruccion -> llamar_proc_func . instruccion
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    llamar_proc_func               shift and go to state 11
+    instruccion                    shift and go to state 30
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 12
+
+    (8) instruccion -> dec_leer . instruccion
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    dec_leer                       shift and go to state 12
+    instruccion                    shift and go to state 31
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 13
+
+    (9) instruccion -> dec_imprimir . instruccion
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    dec_imprimir                   shift and go to state 13
+    instruccion                    shift and go to state 32
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    empty                          shift and go to state 14
+
+state 14
+
+    (10) instruccion -> empty .
+
+    APERTFIN        reduce using rule 10 (instruccion -> empty .)
+    ELSE            reduce using rule 10 (instruccion -> empty .)
+    RETURN          reduce using rule 10 (instruccion -> empty .)
+
+
+state 15
+
+    (11) dec_variables -> T_STRING . NOMBRE ASIGNACION TEXTO
+
+    NOMBRE          shift and go to state 33
+
+
+state 16
+
+    (32) llamar_proc_func -> NOMBRE . IGUALACION NOMBRE
+
+    IGUALACION      shift and go to state 34
+
+
+state 17
+
+    (12) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+
+    NOMBRE          shift and go to state 35
+
+
+state 18
+
+    (18) dec_if -> IF . opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> IF . opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (54) opcion_not -> . NEGACION
+    (55) opcion_not -> . empty
+    (56) empty -> .
+
+    NEGACION        shift and go to state 37
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    T_STRING        reduce using rule 56 (empty -> .)
+    T_DOUBLE        reduce using rule 56 (empty -> .)
+    IF              reduce using rule 56 (empty -> .)
+    WHILE           reduce using rule 56 (empty -> .)
+    FOR             reduce using rule 56 (empty -> .)
+    DO              reduce using rule 56 (empty -> .)
+    NOMBRE          reduce using rule 56 (empty -> .)
+    READ            reduce using rule 56 (empty -> .)
+    T_PRINT         reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+    opcion_not                     shift and go to state 36
+    empty                          shift and go to state 38
+
+state 19
+
+    (20) dec_while -> WHILE . opcion_not condicion APERTINICIO instruccion APERTFIN
+    (54) opcion_not -> . NEGACION
+    (55) opcion_not -> . empty
+    (56) empty -> .
+
+    NEGACION        shift and go to state 37
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    T_STRING        reduce using rule 56 (empty -> .)
+    T_DOUBLE        reduce using rule 56 (empty -> .)
+    IF              reduce using rule 56 (empty -> .)
+    WHILE           reduce using rule 56 (empty -> .)
+    FOR             reduce using rule 56 (empty -> .)
+    DO              reduce using rule 56 (empty -> .)
+    NOMBRE          reduce using rule 56 (empty -> .)
+    READ            reduce using rule 56 (empty -> .)
+    T_PRINT         reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+    opcion_not                     shift and go to state 39
+    empty                          shift and go to state 38
+
+state 20
+
+    (21) dec_for -> FOR . inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (22) inicializacion -> . NOMBRE ASIGNACION NUMEROS
+
+    NOMBRE          shift and go to state 41
+
+    inicializacion                 shift and go to state 40
+
+state 21
+
+    (25) dec_do_while -> DO . APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+
+    APERTINICIO     shift and go to state 42
+
+
+state 22
+
+    (33) dec_leer -> READ . NOMBRE
+
+    NOMBRE          shift and go to state 43
+
+
+state 23
+
+    (34) dec_imprimir -> T_PRINT . ASIGNACION expresion
+    (35) dec_imprimir -> T_PRINT . ASIGNACION expresion MAS expresion
+
+    ASIGNACION      shift and go to state 44
+
+
+state 24
+
+    (1) Inicio -> DEF MAIN APERTINICIO instruccion APERTFIN . dec_proc dec_func
+    (26) dec_proc -> . DEF NOMBRE recibir APERTINICIO instruccion APERTFIN
+    (27) dec_proc -> . empty
+    (56) empty -> .
+
+  ! shift/reduce conflict for DEF resolved as shift
+    DEF             shift and go to state 45
+    APERTFIN        reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    T_STRING        reduce using rule 56 (empty -> .)
+    T_DOUBLE        reduce using rule 56 (empty -> .)
+    IF              reduce using rule 56 (empty -> .)
+    WHILE           reduce using rule 56 (empty -> .)
+    FOR             reduce using rule 56 (empty -> .)
+    DO              reduce using rule 56 (empty -> .)
+    NOMBRE          reduce using rule 56 (empty -> .)
+    READ            reduce using rule 56 (empty -> .)
+    T_PRINT         reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! DEF             [ reduce using rule 56 (empty -> .) ]
+
+    dec_proc                       shift and go to state 46
+    empty                          shift and go to state 47
+
+state 25
+
+    (2) instruccion -> dec_variables instruccion .
+
+    APERTFIN        reduce using rule 2 (instruccion -> dec_variables instruccion .)
+    ELSE            reduce using rule 2 (instruccion -> dec_variables instruccion .)
+    RETURN          reduce using rule 2 (instruccion -> dec_variables instruccion .)
+
+
+state 26
+
+    (3) instruccion -> dec_if instruccion .
+
+    APERTFIN        reduce using rule 3 (instruccion -> dec_if instruccion .)
+    ELSE            reduce using rule 3 (instruccion -> dec_if instruccion .)
+    RETURN          reduce using rule 3 (instruccion -> dec_if instruccion .)
+
+
+state 27
+
+    (4) instruccion -> dec_while instruccion .
+
+    APERTFIN        reduce using rule 4 (instruccion -> dec_while instruccion .)
+    ELSE            reduce using rule 4 (instruccion -> dec_while instruccion .)
+    RETURN          reduce using rule 4 (instruccion -> dec_while instruccion .)
+
+
+state 28
+
+    (5) instruccion -> dec_for instruccion .
+
+    APERTFIN        reduce using rule 5 (instruccion -> dec_for instruccion .)
+    ELSE            reduce using rule 5 (instruccion -> dec_for instruccion .)
+    RETURN          reduce using rule 5 (instruccion -> dec_for instruccion .)
+
+
+state 29
+
+    (6) instruccion -> dec_do_while instruccion .
+
+    APERTFIN        reduce using rule 6 (instruccion -> dec_do_while instruccion .)
+    ELSE            reduce using rule 6 (instruccion -> dec_do_while instruccion .)
+    RETURN          reduce using rule 6 (instruccion -> dec_do_while instruccion .)
+
+
+state 30
+
+    (7) instruccion -> llamar_proc_func instruccion .
+
+    APERTFIN        reduce using rule 7 (instruccion -> llamar_proc_func instruccion .)
+    ELSE            reduce using rule 7 (instruccion -> llamar_proc_func instruccion .)
+    RETURN          reduce using rule 7 (instruccion -> llamar_proc_func instruccion .)
+
+
+state 31
+
+    (8) instruccion -> dec_leer instruccion .
+
+    APERTFIN        reduce using rule 8 (instruccion -> dec_leer instruccion .)
+    ELSE            reduce using rule 8 (instruccion -> dec_leer instruccion .)
+    RETURN          reduce using rule 8 (instruccion -> dec_leer instruccion .)
+
+
+state 32
+
+    (9) instruccion -> dec_imprimir instruccion .
+
+    APERTFIN        reduce using rule 9 (instruccion -> dec_imprimir instruccion .)
+    ELSE            reduce using rule 9 (instruccion -> dec_imprimir instruccion .)
+    RETURN          reduce using rule 9 (instruccion -> dec_imprimir instruccion .)
+
+
+state 33
+
+    (11) dec_variables -> T_STRING NOMBRE . ASIGNACION TEXTO
+
+    ASIGNACION      shift and go to state 48
+
+
+state 34
+
+    (32) llamar_proc_func -> NOMBRE IGUALACION . NOMBRE
+
+    NOMBRE          shift and go to state 49
+
+
+state 35
+
+    (12) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NUMEROS
+    (13) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NOMBRE
+    (15) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NOMBRE operador_m NOMBRE
+
+    ASIGNACION      shift and go to state 50
+
+
+state 36
+
+    (18) dec_if -> IF opcion_not . condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> IF opcion_not . condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (40) condicion -> . expresion comparador expresion comparador condicion
+    (41) condicion -> . empty
+    (42) expresion -> . TEXTO
+    (43) expresion -> . NUMEROS
+    (44) expresion -> . NOMBRE
+    (56) empty -> .
+
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for TEXTO resolved as shift
+  ! shift/reduce conflict for NUMEROS resolved as shift
+    TEXTO           shift and go to state 54
+    NUMEROS         shift and go to state 55
+    NOMBRE          shift and go to state 56
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    T_STRING        reduce using rule 56 (empty -> .)
+    T_DOUBLE        reduce using rule 56 (empty -> .)
+    IF              reduce using rule 56 (empty -> .)
+    WHILE           reduce using rule 56 (empty -> .)
+    FOR             reduce using rule 56 (empty -> .)
+    DO              reduce using rule 56 (empty -> .)
+    READ            reduce using rule 56 (empty -> .)
+    T_PRINT         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! TEXTO           [ reduce using rule 56 (empty -> .) ]
+  ! NUMEROS         [ reduce using rule 56 (empty -> .) ]
+
+    condicion                      shift and go to state 51
+    expresion                      shift and go to state 52
+    empty                          shift and go to state 53
+
+state 37
+
+    (54) opcion_not -> NEGACION .
+
+    TEXTO           reduce using rule 54 (opcion_not -> NEGACION .)
+    NUMEROS         reduce using rule 54 (opcion_not -> NEGACION .)
+    NOMBRE          reduce using rule 54 (opcion_not -> NEGACION .)
+    APERTINICIO     reduce using rule 54 (opcion_not -> NEGACION .)
+    T_STRING        reduce using rule 54 (opcion_not -> NEGACION .)
+    T_DOUBLE        reduce using rule 54 (opcion_not -> NEGACION .)
+    IF              reduce using rule 54 (opcion_not -> NEGACION .)
+    WHILE           reduce using rule 54 (opcion_not -> NEGACION .)
+    FOR             reduce using rule 54 (opcion_not -> NEGACION .)
+    DO              reduce using rule 54 (opcion_not -> NEGACION .)
+    READ            reduce using rule 54 (opcion_not -> NEGACION .)
+    T_PRINT         reduce using rule 54 (opcion_not -> NEGACION .)
+    APERTFIN        reduce using rule 54 (opcion_not -> NEGACION .)
+    ELSE            reduce using rule 54 (opcion_not -> NEGACION .)
+    RETURN          reduce using rule 54 (opcion_not -> NEGACION .)
+
+
+state 38
+
+    (55) opcion_not -> empty .
+
+    TEXTO           reduce using rule 55 (opcion_not -> empty .)
+    NUMEROS         reduce using rule 55 (opcion_not -> empty .)
+    NOMBRE          reduce using rule 55 (opcion_not -> empty .)
+    APERTINICIO     reduce using rule 55 (opcion_not -> empty .)
+    T_STRING        reduce using rule 55 (opcion_not -> empty .)
+    T_DOUBLE        reduce using rule 55 (opcion_not -> empty .)
+    IF              reduce using rule 55 (opcion_not -> empty .)
+    WHILE           reduce using rule 55 (opcion_not -> empty .)
+    FOR             reduce using rule 55 (opcion_not -> empty .)
+    DO              reduce using rule 55 (opcion_not -> empty .)
+    READ            reduce using rule 55 (opcion_not -> empty .)
+    T_PRINT         reduce using rule 55 (opcion_not -> empty .)
+    APERTFIN        reduce using rule 55 (opcion_not -> empty .)
+    ELSE            reduce using rule 55 (opcion_not -> empty .)
+    RETURN          reduce using rule 55 (opcion_not -> empty .)
+
+
+state 39
+
+    (20) dec_while -> WHILE opcion_not . condicion APERTINICIO instruccion APERTFIN
+    (40) condicion -> . expresion comparador expresion comparador condicion
+    (41) condicion -> . empty
+    (42) expresion -> . TEXTO
+    (43) expresion -> . NUMEROS
+    (44) expresion -> . NOMBRE
+    (56) empty -> .
+
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for TEXTO resolved as shift
+  ! shift/reduce conflict for NUMEROS resolved as shift
+    TEXTO           shift and go to state 54
+    NUMEROS         shift and go to state 55
+    NOMBRE          shift and go to state 56
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    T_STRING        reduce using rule 56 (empty -> .)
+    T_DOUBLE        reduce using rule 56 (empty -> .)
+    IF              reduce using rule 56 (empty -> .)
+    WHILE           reduce using rule 56 (empty -> .)
+    FOR             reduce using rule 56 (empty -> .)
+    DO              reduce using rule 56 (empty -> .)
+    READ            reduce using rule 56 (empty -> .)
+    T_PRINT         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! TEXTO           [ reduce using rule 56 (empty -> .) ]
+  ! NUMEROS         [ reduce using rule 56 (empty -> .) ]
+
+    condicion                      shift and go to state 57
+    expresion                      shift and go to state 52
+    empty                          shift and go to state 53
+
+state 40
+
+    (21) dec_for -> FOR inicializacion . COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+
+    COMA            shift and go to state 58
+
+
+state 41
+
+    (22) inicializacion -> NOMBRE . ASIGNACION NUMEROS
+
+    ASIGNACION      shift and go to state 59
+
+
+state 42
+
+    (25) dec_do_while -> DO APERTINICIO . instruccion APERTFIN WHILE opcion_not condicion
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    instruccion                    shift and go to state 60
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 43
+
+    (33) dec_leer -> READ NOMBRE .
+
+    T_STRING        reduce using rule 33 (dec_leer -> READ NOMBRE .)
+    T_DOUBLE        reduce using rule 33 (dec_leer -> READ NOMBRE .)
+    IF              reduce using rule 33 (dec_leer -> READ NOMBRE .)
+    WHILE           reduce using rule 33 (dec_leer -> READ NOMBRE .)
+    FOR             reduce using rule 33 (dec_leer -> READ NOMBRE .)
+    DO              reduce using rule 33 (dec_leer -> READ NOMBRE .)
+    NOMBRE          reduce using rule 33 (dec_leer -> READ NOMBRE .)
+    READ            reduce using rule 33 (dec_leer -> READ NOMBRE .)
+    T_PRINT         reduce using rule 33 (dec_leer -> READ NOMBRE .)
+    APERTFIN        reduce using rule 33 (dec_leer -> READ NOMBRE .)
+    ELSE            reduce using rule 33 (dec_leer -> READ NOMBRE .)
+    RETURN          reduce using rule 33 (dec_leer -> READ NOMBRE .)
+
+
+state 44
+
+    (34) dec_imprimir -> T_PRINT ASIGNACION . expresion
+    (35) dec_imprimir -> T_PRINT ASIGNACION . expresion MAS expresion
+    (42) expresion -> . TEXTO
+    (43) expresion -> . NUMEROS
+    (44) expresion -> . NOMBRE
+
+    TEXTO           shift and go to state 54
+    NUMEROS         shift and go to state 55
+    NOMBRE          shift and go to state 56
+
+    expresion                      shift and go to state 61
+
+state 45
+
+    (26) dec_proc -> DEF . NOMBRE recibir APERTINICIO instruccion APERTFIN
+
+    NOMBRE          shift and go to state 62
+
+
+state 46
+
+    (1) Inicio -> DEF MAIN APERTINICIO instruccion APERTFIN dec_proc . dec_func
+    (28) dec_func -> . DEF NOMBRE recibir APERTINICIO instruccion RETURN NOMBRE APERTFIN
+    (29) dec_func -> . empty
+    (56) empty -> .
+
+  ! shift/reduce conflict for DEF resolved as shift
+    DEF             shift and go to state 63
+    APERTFIN        reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    T_STRING        reduce using rule 56 (empty -> .)
+    T_DOUBLE        reduce using rule 56 (empty -> .)
+    IF              reduce using rule 56 (empty -> .)
+    WHILE           reduce using rule 56 (empty -> .)
+    FOR             reduce using rule 56 (empty -> .)
+    DO              reduce using rule 56 (empty -> .)
+    NOMBRE          reduce using rule 56 (empty -> .)
+    READ            reduce using rule 56 (empty -> .)
+    T_PRINT         reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! DEF             [ reduce using rule 56 (empty -> .) ]
+
+    dec_func                       shift and go to state 64
+    empty                          shift and go to state 65
+
+state 47
+
+    (27) dec_proc -> empty .
+
+    DEF             reduce using rule 27 (dec_proc -> empty .)
+    $end            reduce using rule 27 (dec_proc -> empty .)
+
+
+state 48
+
+    (11) dec_variables -> T_STRING NOMBRE ASIGNACION . TEXTO
+
+    TEXTO           shift and go to state 66
+
+
+state 49
+
+    (32) llamar_proc_func -> NOMBRE IGUALACION NOMBRE .
+
+    T_STRING        reduce using rule 32 (llamar_proc_func -> NOMBRE IGUALACION NOMBRE .)
+    T_DOUBLE        reduce using rule 32 (llamar_proc_func -> NOMBRE IGUALACION NOMBRE .)
+    IF              reduce using rule 32 (llamar_proc_func -> NOMBRE IGUALACION NOMBRE .)
+    WHILE           reduce using rule 32 (llamar_proc_func -> NOMBRE IGUALACION NOMBRE .)
+    FOR             reduce using rule 32 (llamar_proc_func -> NOMBRE IGUALACION NOMBRE .)
+    DO              reduce using rule 32 (llamar_proc_func -> NOMBRE IGUALACION NOMBRE .)
+    NOMBRE          reduce using rule 32 (llamar_proc_func -> NOMBRE IGUALACION NOMBRE .)
+    READ            reduce using rule 32 (llamar_proc_func -> NOMBRE IGUALACION NOMBRE .)
+    T_PRINT         reduce using rule 32 (llamar_proc_func -> NOMBRE IGUALACION NOMBRE .)
+    APERTFIN        reduce using rule 32 (llamar_proc_func -> NOMBRE IGUALACION NOMBRE .)
+    ELSE            reduce using rule 32 (llamar_proc_func -> NOMBRE IGUALACION NOMBRE .)
+    RETURN          reduce using rule 32 (llamar_proc_func -> NOMBRE IGUALACION NOMBRE .)
+
+
+state 50
+
+    (12) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NUMEROS
+    (13) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NUMEROS operador_m NUMEROS
+    (14) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NOMBRE
+    (15) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NOMBRE operador_m NUMEROS
+    (16) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NUMEROS operador_m NOMBRE
+    (17) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NOMBRE operador_m NOMBRE
+
+    NUMEROS         shift and go to state 68
+    NOMBRE          shift and go to state 67
+
+
+state 51
+
+    (18) dec_if -> IF opcion_not condicion . APERTINICIO instruccion APERTFIN
+    (19) dec_if -> IF opcion_not condicion . APERTINICIO instruccion ELSE instruccion APERTFIN
+
+    APERTINICIO     shift and go to state 69
+
+
+state 52
+
+    (40) condicion -> expresion . comparador expresion comparador condicion
+    (45) comparador -> . IGUALACION
+    (46) comparador -> . DIFERENCIA
+    (47) comparador -> . MML
+    (48) comparador -> . MMR
+    (49) comparador -> . MMIL
+    (50) comparador -> . MMIR
+    (51) comparador -> . OPCI
+    (52) comparador -> . OPCII
+    (53) comparador -> . empty
+    (56) empty -> .
+
+    IGUALACION      shift and go to state 71
+    DIFERENCIA      shift and go to state 72
+    MML             shift and go to state 73
+    MMR             shift and go to state 74
+    MMIL            shift and go to state 75
+    MMIR            shift and go to state 76
+    OPCI            shift and go to state 77
+    OPCII           shift and go to state 78
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    T_STRING        reduce using rule 56 (empty -> .)
+    T_DOUBLE        reduce using rule 56 (empty -> .)
+    IF              reduce using rule 56 (empty -> .)
+    WHILE           reduce using rule 56 (empty -> .)
+    FOR             reduce using rule 56 (empty -> .)
+    DO              reduce using rule 56 (empty -> .)
+    NOMBRE          reduce using rule 56 (empty -> .)
+    READ            reduce using rule 56 (empty -> .)
+    T_PRINT         reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+    comparador                     shift and go to state 70
+    empty                          shift and go to state 79
+
+state 53
+
+    (41) condicion -> empty .
+
+    APERTINICIO     reduce using rule 41 (condicion -> empty .)
+    COMA            reduce using rule 41 (condicion -> empty .)
+    T_STRING        reduce using rule 41 (condicion -> empty .)
+    T_DOUBLE        reduce using rule 41 (condicion -> empty .)
+    IF              reduce using rule 41 (condicion -> empty .)
+    WHILE           reduce using rule 41 (condicion -> empty .)
+    FOR             reduce using rule 41 (condicion -> empty .)
+    DO              reduce using rule 41 (condicion -> empty .)
+    NOMBRE          reduce using rule 41 (condicion -> empty .)
+    READ            reduce using rule 41 (condicion -> empty .)
+    T_PRINT         reduce using rule 41 (condicion -> empty .)
+    APERTFIN        reduce using rule 41 (condicion -> empty .)
+    ELSE            reduce using rule 41 (condicion -> empty .)
+    RETURN          reduce using rule 41 (condicion -> empty .)
+
+
+state 54
+
+    (42) expresion -> TEXTO .
+
+    T_STRING        reduce using rule 42 (expresion -> TEXTO .)
+    T_DOUBLE        reduce using rule 42 (expresion -> TEXTO .)
+    IF              reduce using rule 42 (expresion -> TEXTO .)
+    WHILE           reduce using rule 42 (expresion -> TEXTO .)
+    FOR             reduce using rule 42 (expresion -> TEXTO .)
+    DO              reduce using rule 42 (expresion -> TEXTO .)
+    NOMBRE          reduce using rule 42 (expresion -> TEXTO .)
+    READ            reduce using rule 42 (expresion -> TEXTO .)
+    T_PRINT         reduce using rule 42 (expresion -> TEXTO .)
+    APERTFIN        reduce using rule 42 (expresion -> TEXTO .)
+    MAS             reduce using rule 42 (expresion -> TEXTO .)
+    IGUALACION      reduce using rule 42 (expresion -> TEXTO .)
+    DIFERENCIA      reduce using rule 42 (expresion -> TEXTO .)
+    MML             reduce using rule 42 (expresion -> TEXTO .)
+    MMR             reduce using rule 42 (expresion -> TEXTO .)
+    MMIL            reduce using rule 42 (expresion -> TEXTO .)
+    MMIR            reduce using rule 42 (expresion -> TEXTO .)
+    OPCI            reduce using rule 42 (expresion -> TEXTO .)
+    OPCII           reduce using rule 42 (expresion -> TEXTO .)
+    TEXTO           reduce using rule 42 (expresion -> TEXTO .)
+    NUMEROS         reduce using rule 42 (expresion -> TEXTO .)
+    APERTINICIO     reduce using rule 42 (expresion -> TEXTO .)
+    COMA            reduce using rule 42 (expresion -> TEXTO .)
+    ELSE            reduce using rule 42 (expresion -> TEXTO .)
+    RETURN          reduce using rule 42 (expresion -> TEXTO .)
+
+
+state 55
+
+    (43) expresion -> NUMEROS .
+
+    T_STRING        reduce using rule 43 (expresion -> NUMEROS .)
+    T_DOUBLE        reduce using rule 43 (expresion -> NUMEROS .)
+    IF              reduce using rule 43 (expresion -> NUMEROS .)
+    WHILE           reduce using rule 43 (expresion -> NUMEROS .)
+    FOR             reduce using rule 43 (expresion -> NUMEROS .)
+    DO              reduce using rule 43 (expresion -> NUMEROS .)
+    NOMBRE          reduce using rule 43 (expresion -> NUMEROS .)
+    READ            reduce using rule 43 (expresion -> NUMEROS .)
+    T_PRINT         reduce using rule 43 (expresion -> NUMEROS .)
+    APERTFIN        reduce using rule 43 (expresion -> NUMEROS .)
+    MAS             reduce using rule 43 (expresion -> NUMEROS .)
+    IGUALACION      reduce using rule 43 (expresion -> NUMEROS .)
+    DIFERENCIA      reduce using rule 43 (expresion -> NUMEROS .)
+    MML             reduce using rule 43 (expresion -> NUMEROS .)
+    MMR             reduce using rule 43 (expresion -> NUMEROS .)
+    MMIL            reduce using rule 43 (expresion -> NUMEROS .)
+    MMIR            reduce using rule 43 (expresion -> NUMEROS .)
+    OPCI            reduce using rule 43 (expresion -> NUMEROS .)
+    OPCII           reduce using rule 43 (expresion -> NUMEROS .)
+    TEXTO           reduce using rule 43 (expresion -> NUMEROS .)
+    NUMEROS         reduce using rule 43 (expresion -> NUMEROS .)
+    APERTINICIO     reduce using rule 43 (expresion -> NUMEROS .)
+    COMA            reduce using rule 43 (expresion -> NUMEROS .)
+    ELSE            reduce using rule 43 (expresion -> NUMEROS .)
+    RETURN          reduce using rule 43 (expresion -> NUMEROS .)
+
+
+state 56
+
+    (44) expresion -> NOMBRE .
+
+    T_STRING        reduce using rule 44 (expresion -> NOMBRE .)
+    T_DOUBLE        reduce using rule 44 (expresion -> NOMBRE .)
+    IF              reduce using rule 44 (expresion -> NOMBRE .)
+    WHILE           reduce using rule 44 (expresion -> NOMBRE .)
+    FOR             reduce using rule 44 (expresion -> NOMBRE .)
+    DO              reduce using rule 44 (expresion -> NOMBRE .)
+    NOMBRE          reduce using rule 44 (expresion -> NOMBRE .)
+    READ            reduce using rule 44 (expresion -> NOMBRE .)
+    T_PRINT         reduce using rule 44 (expresion -> NOMBRE .)
+    APERTFIN        reduce using rule 44 (expresion -> NOMBRE .)
+    MAS             reduce using rule 44 (expresion -> NOMBRE .)
+    IGUALACION      reduce using rule 44 (expresion -> NOMBRE .)
+    DIFERENCIA      reduce using rule 44 (expresion -> NOMBRE .)
+    MML             reduce using rule 44 (expresion -> NOMBRE .)
+    MMR             reduce using rule 44 (expresion -> NOMBRE .)
+    MMIL            reduce using rule 44 (expresion -> NOMBRE .)
+    MMIR            reduce using rule 44 (expresion -> NOMBRE .)
+    OPCI            reduce using rule 44 (expresion -> NOMBRE .)
+    OPCII           reduce using rule 44 (expresion -> NOMBRE .)
+    TEXTO           reduce using rule 44 (expresion -> NOMBRE .)
+    NUMEROS         reduce using rule 44 (expresion -> NOMBRE .)
+    APERTINICIO     reduce using rule 44 (expresion -> NOMBRE .)
+    COMA            reduce using rule 44 (expresion -> NOMBRE .)
+    ELSE            reduce using rule 44 (expresion -> NOMBRE .)
+    RETURN          reduce using rule 44 (expresion -> NOMBRE .)
+
+
+state 57
+
+    (20) dec_while -> WHILE opcion_not condicion . APERTINICIO instruccion APERTFIN
+
+    APERTINICIO     shift and go to state 80
+
+
+state 58
+
+    (21) dec_for -> FOR inicializacion COMA . condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (40) condicion -> . expresion comparador expresion comparador condicion
+    (41) condicion -> . empty
+    (42) expresion -> . TEXTO
+    (43) expresion -> . NUMEROS
+    (44) expresion -> . NOMBRE
+    (56) empty -> .
+
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for TEXTO resolved as shift
+  ! shift/reduce conflict for NUMEROS resolved as shift
+    TEXTO           shift and go to state 54
+    NUMEROS         shift and go to state 55
+    NOMBRE          shift and go to state 56
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    T_STRING        reduce using rule 56 (empty -> .)
+    T_DOUBLE        reduce using rule 56 (empty -> .)
+    IF              reduce using rule 56 (empty -> .)
+    WHILE           reduce using rule 56 (empty -> .)
+    FOR             reduce using rule 56 (empty -> .)
+    DO              reduce using rule 56 (empty -> .)
+    READ            reduce using rule 56 (empty -> .)
+    T_PRINT         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! TEXTO           [ reduce using rule 56 (empty -> .) ]
+  ! NUMEROS         [ reduce using rule 56 (empty -> .) ]
+
+    condicion                      shift and go to state 81
+    expresion                      shift and go to state 52
+    empty                          shift and go to state 53
+
+state 59
+
+    (22) inicializacion -> NOMBRE ASIGNACION . NUMEROS
+
+    NUMEROS         shift and go to state 82
+
+
+state 60
+
+    (25) dec_do_while -> DO APERTINICIO instruccion . APERTFIN WHILE opcion_not condicion
+
+    APERTFIN        shift and go to state 83
+
+
+state 61
+
+    (34) dec_imprimir -> T_PRINT ASIGNACION expresion .
+    (35) dec_imprimir -> T_PRINT ASIGNACION expresion . MAS expresion
+
+    T_STRING        reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
+    T_DOUBLE        reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
+    IF              reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
+    WHILE           reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
+    FOR             reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
+    DO              reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
+    NOMBRE          reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
+    READ            reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
+    T_PRINT         reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
+    APERTFIN        reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
+    ELSE            reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
+    RETURN          reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
+    MAS             shift and go to state 84
+
+
+state 62
+
+    (26) dec_proc -> DEF NOMBRE . recibir APERTINICIO instruccion APERTFIN
+    (30) recibir -> . T_STRING NOMBRE
+    (31) recibir -> . T_DOUBLE NOMBRE
+
+    T_STRING        shift and go to state 86
+    T_DOUBLE        shift and go to state 87
+
+    recibir                        shift and go to state 85
+
+state 63
+
+    (28) dec_func -> DEF . NOMBRE recibir APERTINICIO instruccion RETURN NOMBRE APERTFIN
+
+    NOMBRE          shift and go to state 88
+
+
+state 64
+
+    (1) Inicio -> DEF MAIN APERTINICIO instruccion APERTFIN dec_proc dec_func .
+
+    $end            reduce using rule 1 (Inicio -> DEF MAIN APERTINICIO instruccion APERTFIN dec_proc dec_func .)
+
+
+state 65
+
+    (29) dec_func -> empty .
+
+    $end            reduce using rule 29 (dec_func -> empty .)
+
+
+state 66
+
+    (11) dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .
+
+    T_STRING        reduce using rule 11 (dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .)
+    T_DOUBLE        reduce using rule 11 (dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .)
+    IF              reduce using rule 11 (dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .)
+    WHILE           reduce using rule 11 (dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .)
+    FOR             reduce using rule 11 (dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .)
+    DO              reduce using rule 11 (dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .)
+    NOMBRE          reduce using rule 11 (dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .)
+    READ            reduce using rule 11 (dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .)
+    T_PRINT         reduce using rule 11 (dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .)
+    APERTFIN        reduce using rule 11 (dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .)
+    ELSE            reduce using rule 11 (dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .)
+    RETURN          reduce using rule 11 (dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO .)
+
+
+state 67
+
+    (14) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .
+    (15) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE . operador_m NUMEROS
+    (17) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE . operador_m NOMBRE
+    (36) operador_m -> . MENOS
+    (37) operador_m -> . MAS
+    (38) operador_m -> . DIVISION
+    (39) operador_m -> . MULTIPLICACION
+
+    T_STRING        reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    T_DOUBLE        reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    IF              reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    WHILE           reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    FOR             reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    DO              reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    NOMBRE          reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    READ            reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    T_PRINT         reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    APERTFIN        reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    ELSE            reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    RETURN          reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    MENOS           shift and go to state 90
+    MAS             shift and go to state 91
+    DIVISION        shift and go to state 92
+    MULTIPLICACION  shift and go to state 93
+
+    operador_m                     shift and go to state 89
+
+state 68
+
+    (12) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .
+    (13) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS . operador_m NUMEROS
+    (16) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS . operador_m NOMBRE
+    (36) operador_m -> . MENOS
+    (37) operador_m -> . MAS
+    (38) operador_m -> . DIVISION
+    (39) operador_m -> . MULTIPLICACION
+
+    T_STRING        reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
+    T_DOUBLE        reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
+    IF              reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
+    WHILE           reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
+    FOR             reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
+    DO              reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
+    NOMBRE          reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
+    READ            reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
+    T_PRINT         reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
+    APERTFIN        reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
+    ELSE            reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
+    RETURN          reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
+    MENOS           shift and go to state 90
+    MAS             shift and go to state 91
+    DIVISION        shift and go to state 92
+    MULTIPLICACION  shift and go to state 93
+
+    operador_m                     shift and go to state 94
+
+state 69
+
+    (18) dec_if -> IF opcion_not condicion APERTINICIO . instruccion APERTFIN
+    (19) dec_if -> IF opcion_not condicion APERTINICIO . instruccion ELSE instruccion APERTFIN
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    instruccion                    shift and go to state 95
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 70
+
+    (40) condicion -> expresion comparador . expresion comparador condicion
+    (42) expresion -> . TEXTO
+    (43) expresion -> . NUMEROS
+    (44) expresion -> . NOMBRE
+
+    TEXTO           shift and go to state 54
+    NUMEROS         shift and go to state 55
+    NOMBRE          shift and go to state 56
+
+    expresion                      shift and go to state 96
+
+state 71
+
+    (45) comparador -> IGUALACION .
+
+    TEXTO           reduce using rule 45 (comparador -> IGUALACION .)
+    NUMEROS         reduce using rule 45 (comparador -> IGUALACION .)
+    NOMBRE          reduce using rule 45 (comparador -> IGUALACION .)
+    APERTINICIO     reduce using rule 45 (comparador -> IGUALACION .)
+    COMA            reduce using rule 45 (comparador -> IGUALACION .)
+    T_STRING        reduce using rule 45 (comparador -> IGUALACION .)
+    T_DOUBLE        reduce using rule 45 (comparador -> IGUALACION .)
+    IF              reduce using rule 45 (comparador -> IGUALACION .)
+    WHILE           reduce using rule 45 (comparador -> IGUALACION .)
+    FOR             reduce using rule 45 (comparador -> IGUALACION .)
+    DO              reduce using rule 45 (comparador -> IGUALACION .)
+    READ            reduce using rule 45 (comparador -> IGUALACION .)
+    T_PRINT         reduce using rule 45 (comparador -> IGUALACION .)
+    APERTFIN        reduce using rule 45 (comparador -> IGUALACION .)
+    ELSE            reduce using rule 45 (comparador -> IGUALACION .)
+    RETURN          reduce using rule 45 (comparador -> IGUALACION .)
+
+
+state 72
+
+    (46) comparador -> DIFERENCIA .
+
+    TEXTO           reduce using rule 46 (comparador -> DIFERENCIA .)
+    NUMEROS         reduce using rule 46 (comparador -> DIFERENCIA .)
+    NOMBRE          reduce using rule 46 (comparador -> DIFERENCIA .)
+    APERTINICIO     reduce using rule 46 (comparador -> DIFERENCIA .)
+    COMA            reduce using rule 46 (comparador -> DIFERENCIA .)
+    T_STRING        reduce using rule 46 (comparador -> DIFERENCIA .)
+    T_DOUBLE        reduce using rule 46 (comparador -> DIFERENCIA .)
+    IF              reduce using rule 46 (comparador -> DIFERENCIA .)
+    WHILE           reduce using rule 46 (comparador -> DIFERENCIA .)
+    FOR             reduce using rule 46 (comparador -> DIFERENCIA .)
+    DO              reduce using rule 46 (comparador -> DIFERENCIA .)
+    READ            reduce using rule 46 (comparador -> DIFERENCIA .)
+    T_PRINT         reduce using rule 46 (comparador -> DIFERENCIA .)
+    APERTFIN        reduce using rule 46 (comparador -> DIFERENCIA .)
+    ELSE            reduce using rule 46 (comparador -> DIFERENCIA .)
+    RETURN          reduce using rule 46 (comparador -> DIFERENCIA .)
+
+
+state 73
+
+    (47) comparador -> MML .
+
+    TEXTO           reduce using rule 47 (comparador -> MML .)
+    NUMEROS         reduce using rule 47 (comparador -> MML .)
+    NOMBRE          reduce using rule 47 (comparador -> MML .)
+    APERTINICIO     reduce using rule 47 (comparador -> MML .)
+    COMA            reduce using rule 47 (comparador -> MML .)
+    T_STRING        reduce using rule 47 (comparador -> MML .)
+    T_DOUBLE        reduce using rule 47 (comparador -> MML .)
+    IF              reduce using rule 47 (comparador -> MML .)
+    WHILE           reduce using rule 47 (comparador -> MML .)
+    FOR             reduce using rule 47 (comparador -> MML .)
+    DO              reduce using rule 47 (comparador -> MML .)
+    READ            reduce using rule 47 (comparador -> MML .)
+    T_PRINT         reduce using rule 47 (comparador -> MML .)
+    APERTFIN        reduce using rule 47 (comparador -> MML .)
+    ELSE            reduce using rule 47 (comparador -> MML .)
+    RETURN          reduce using rule 47 (comparador -> MML .)
+
+
+state 74
+
+    (48) comparador -> MMR .
+
+    TEXTO           reduce using rule 48 (comparador -> MMR .)
+    NUMEROS         reduce using rule 48 (comparador -> MMR .)
+    NOMBRE          reduce using rule 48 (comparador -> MMR .)
+    APERTINICIO     reduce using rule 48 (comparador -> MMR .)
+    COMA            reduce using rule 48 (comparador -> MMR .)
+    T_STRING        reduce using rule 48 (comparador -> MMR .)
+    T_DOUBLE        reduce using rule 48 (comparador -> MMR .)
+    IF              reduce using rule 48 (comparador -> MMR .)
+    WHILE           reduce using rule 48 (comparador -> MMR .)
+    FOR             reduce using rule 48 (comparador -> MMR .)
+    DO              reduce using rule 48 (comparador -> MMR .)
+    READ            reduce using rule 48 (comparador -> MMR .)
+    T_PRINT         reduce using rule 48 (comparador -> MMR .)
+    APERTFIN        reduce using rule 48 (comparador -> MMR .)
+    ELSE            reduce using rule 48 (comparador -> MMR .)
+    RETURN          reduce using rule 48 (comparador -> MMR .)
+
+
+state 75
+
+    (49) comparador -> MMIL .
+
+    TEXTO           reduce using rule 49 (comparador -> MMIL .)
+    NUMEROS         reduce using rule 49 (comparador -> MMIL .)
+    NOMBRE          reduce using rule 49 (comparador -> MMIL .)
+    APERTINICIO     reduce using rule 49 (comparador -> MMIL .)
+    COMA            reduce using rule 49 (comparador -> MMIL .)
+    T_STRING        reduce using rule 49 (comparador -> MMIL .)
+    T_DOUBLE        reduce using rule 49 (comparador -> MMIL .)
+    IF              reduce using rule 49 (comparador -> MMIL .)
+    WHILE           reduce using rule 49 (comparador -> MMIL .)
+    FOR             reduce using rule 49 (comparador -> MMIL .)
+    DO              reduce using rule 49 (comparador -> MMIL .)
+    READ            reduce using rule 49 (comparador -> MMIL .)
+    T_PRINT         reduce using rule 49 (comparador -> MMIL .)
+    APERTFIN        reduce using rule 49 (comparador -> MMIL .)
+    ELSE            reduce using rule 49 (comparador -> MMIL .)
+    RETURN          reduce using rule 49 (comparador -> MMIL .)
+
+
+state 76
+
+    (50) comparador -> MMIR .
+
+    TEXTO           reduce using rule 50 (comparador -> MMIR .)
+    NUMEROS         reduce using rule 50 (comparador -> MMIR .)
+    NOMBRE          reduce using rule 50 (comparador -> MMIR .)
+    APERTINICIO     reduce using rule 50 (comparador -> MMIR .)
+    COMA            reduce using rule 50 (comparador -> MMIR .)
+    T_STRING        reduce using rule 50 (comparador -> MMIR .)
+    T_DOUBLE        reduce using rule 50 (comparador -> MMIR .)
+    IF              reduce using rule 50 (comparador -> MMIR .)
+    WHILE           reduce using rule 50 (comparador -> MMIR .)
+    FOR             reduce using rule 50 (comparador -> MMIR .)
+    DO              reduce using rule 50 (comparador -> MMIR .)
+    READ            reduce using rule 50 (comparador -> MMIR .)
+    T_PRINT         reduce using rule 50 (comparador -> MMIR .)
+    APERTFIN        reduce using rule 50 (comparador -> MMIR .)
+    ELSE            reduce using rule 50 (comparador -> MMIR .)
+    RETURN          reduce using rule 50 (comparador -> MMIR .)
+
+
+state 77
+
+    (51) comparador -> OPCI .
+
+    TEXTO           reduce using rule 51 (comparador -> OPCI .)
+    NUMEROS         reduce using rule 51 (comparador -> OPCI .)
+    NOMBRE          reduce using rule 51 (comparador -> OPCI .)
+    APERTINICIO     reduce using rule 51 (comparador -> OPCI .)
+    COMA            reduce using rule 51 (comparador -> OPCI .)
+    T_STRING        reduce using rule 51 (comparador -> OPCI .)
+    T_DOUBLE        reduce using rule 51 (comparador -> OPCI .)
+    IF              reduce using rule 51 (comparador -> OPCI .)
+    WHILE           reduce using rule 51 (comparador -> OPCI .)
+    FOR             reduce using rule 51 (comparador -> OPCI .)
+    DO              reduce using rule 51 (comparador -> OPCI .)
+    READ            reduce using rule 51 (comparador -> OPCI .)
+    T_PRINT         reduce using rule 51 (comparador -> OPCI .)
+    APERTFIN        reduce using rule 51 (comparador -> OPCI .)
+    ELSE            reduce using rule 51 (comparador -> OPCI .)
+    RETURN          reduce using rule 51 (comparador -> OPCI .)
+
+
+state 78
+
+    (52) comparador -> OPCII .
+
+    TEXTO           reduce using rule 52 (comparador -> OPCII .)
+    NUMEROS         reduce using rule 52 (comparador -> OPCII .)
+    NOMBRE          reduce using rule 52 (comparador -> OPCII .)
+    APERTINICIO     reduce using rule 52 (comparador -> OPCII .)
+    COMA            reduce using rule 52 (comparador -> OPCII .)
+    T_STRING        reduce using rule 52 (comparador -> OPCII .)
+    T_DOUBLE        reduce using rule 52 (comparador -> OPCII .)
+    IF              reduce using rule 52 (comparador -> OPCII .)
+    WHILE           reduce using rule 52 (comparador -> OPCII .)
+    FOR             reduce using rule 52 (comparador -> OPCII .)
+    DO              reduce using rule 52 (comparador -> OPCII .)
+    READ            reduce using rule 52 (comparador -> OPCII .)
+    T_PRINT         reduce using rule 52 (comparador -> OPCII .)
+    APERTFIN        reduce using rule 52 (comparador -> OPCII .)
+    ELSE            reduce using rule 52 (comparador -> OPCII .)
+    RETURN          reduce using rule 52 (comparador -> OPCII .)
+
+
+state 79
+
+    (53) comparador -> empty .
+
+    TEXTO           reduce using rule 53 (comparador -> empty .)
+    NUMEROS         reduce using rule 53 (comparador -> empty .)
+    NOMBRE          reduce using rule 53 (comparador -> empty .)
+    APERTINICIO     reduce using rule 53 (comparador -> empty .)
+    COMA            reduce using rule 53 (comparador -> empty .)
+    T_STRING        reduce using rule 53 (comparador -> empty .)
+    T_DOUBLE        reduce using rule 53 (comparador -> empty .)
+    IF              reduce using rule 53 (comparador -> empty .)
+    WHILE           reduce using rule 53 (comparador -> empty .)
+    FOR             reduce using rule 53 (comparador -> empty .)
+    DO              reduce using rule 53 (comparador -> empty .)
+    READ            reduce using rule 53 (comparador -> empty .)
+    T_PRINT         reduce using rule 53 (comparador -> empty .)
+    APERTFIN        reduce using rule 53 (comparador -> empty .)
+    ELSE            reduce using rule 53 (comparador -> empty .)
+    RETURN          reduce using rule 53 (comparador -> empty .)
+
+
+state 80
+
+    (20) dec_while -> WHILE opcion_not condicion APERTINICIO . instruccion APERTFIN
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    instruccion                    shift and go to state 97
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 81
+
+    (21) dec_for -> FOR inicializacion COMA condicion . COMA autoincremento APERTINICIO instruccion APERTFIN
+
+    COMA            shift and go to state 98
+
+
+state 82
+
+    (22) inicializacion -> NOMBRE ASIGNACION NUMEROS .
+
+    COMA            reduce using rule 22 (inicializacion -> NOMBRE ASIGNACION NUMEROS .)
+
+
+state 83
+
+    (25) dec_do_while -> DO APERTINICIO instruccion APERTFIN . WHILE opcion_not condicion
+
+    WHILE           shift and go to state 99
+
+
+state 84
+
+    (35) dec_imprimir -> T_PRINT ASIGNACION expresion MAS . expresion
+    (42) expresion -> . TEXTO
+    (43) expresion -> . NUMEROS
+    (44) expresion -> . NOMBRE
+
+    TEXTO           shift and go to state 54
+    NUMEROS         shift and go to state 55
+    NOMBRE          shift and go to state 56
+
+    expresion                      shift and go to state 100
+
+state 85
+
+    (26) dec_proc -> DEF NOMBRE recibir . APERTINICIO instruccion APERTFIN
+
+    APERTINICIO     shift and go to state 101
+
+
+state 86
+
+    (30) recibir -> T_STRING . NOMBRE
+
+    NOMBRE          shift and go to state 102
+
+
+state 87
+
+    (31) recibir -> T_DOUBLE . NOMBRE
+
+    NOMBRE          shift and go to state 103
+
+
+state 88
+
+    (28) dec_func -> DEF NOMBRE . recibir APERTINICIO instruccion RETURN NOMBRE APERTFIN
+    (30) recibir -> . T_STRING NOMBRE
+    (31) recibir -> . T_DOUBLE NOMBRE
+
+    T_STRING        shift and go to state 86
+    T_DOUBLE        shift and go to state 87
+
+    recibir                        shift and go to state 104
+
+state 89
+
+    (15) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m . NUMEROS
+    (17) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m . NOMBRE
+
+    NUMEROS         shift and go to state 106
+    NOMBRE          shift and go to state 105
+
+
+state 90
+
+    (36) operador_m -> MENOS .
+
+    NUMEROS         reduce using rule 36 (operador_m -> MENOS .)
+    NOMBRE          reduce using rule 36 (operador_m -> MENOS .)
+
+
+state 91
+
+    (37) operador_m -> MAS .
+
+    NUMEROS         reduce using rule 37 (operador_m -> MAS .)
+    NOMBRE          reduce using rule 37 (operador_m -> MAS .)
+
+
+state 92
+
+    (38) operador_m -> DIVISION .
+
+    NUMEROS         reduce using rule 38 (operador_m -> DIVISION .)
+    NOMBRE          reduce using rule 38 (operador_m -> DIVISION .)
+
+
+state 93
+
+    (39) operador_m -> MULTIPLICACION .
+
+    NUMEROS         reduce using rule 39 (operador_m -> MULTIPLICACION .)
+    NOMBRE          reduce using rule 39 (operador_m -> MULTIPLICACION .)
+
+
+state 94
+
+    (13) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m . NUMEROS
+    (16) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m . NOMBRE
+
+    NUMEROS         shift and go to state 108
+    NOMBRE          shift and go to state 107
+
+
+state 95
+
+    (18) dec_if -> IF opcion_not condicion APERTINICIO instruccion . APERTFIN
+    (19) dec_if -> IF opcion_not condicion APERTINICIO instruccion . ELSE instruccion APERTFIN
+
+    APERTFIN        shift and go to state 109
+    ELSE            shift and go to state 110
+
+
+state 96
+
+    (40) condicion -> expresion comparador expresion . comparador condicion
+    (45) comparador -> . IGUALACION
+    (46) comparador -> . DIFERENCIA
+    (47) comparador -> . MML
+    (48) comparador -> . MMR
+    (49) comparador -> . MMIL
+    (50) comparador -> . MMIR
+    (51) comparador -> . OPCI
+    (52) comparador -> . OPCII
+    (53) comparador -> . empty
+    (56) empty -> .
+
+    IGUALACION      shift and go to state 71
+    DIFERENCIA      shift and go to state 72
+    MML             shift and go to state 73
+    MMR             shift and go to state 74
+    MMIL            shift and go to state 75
+    MMIR            shift and go to state 76
+    OPCI            shift and go to state 77
+    OPCII           shift and go to state 78
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    T_STRING        reduce using rule 56 (empty -> .)
+    T_DOUBLE        reduce using rule 56 (empty -> .)
+    IF              reduce using rule 56 (empty -> .)
+    WHILE           reduce using rule 56 (empty -> .)
+    FOR             reduce using rule 56 (empty -> .)
+    DO              reduce using rule 56 (empty -> .)
+    NOMBRE          reduce using rule 56 (empty -> .)
+    READ            reduce using rule 56 (empty -> .)
+    T_PRINT         reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+    comparador                     shift and go to state 111
+    empty                          shift and go to state 79
+
+state 97
+
+    (20) dec_while -> WHILE opcion_not condicion APERTINICIO instruccion . APERTFIN
+
+    APERTFIN        shift and go to state 112
+
+
+state 98
+
+    (21) dec_for -> FOR inicializacion COMA condicion COMA . autoincremento APERTINICIO instruccion APERTFIN
+    (23) autoincremento -> . NOMBRE MAS MAS
+    (24) autoincremento -> . NOMBRE MAS NUMEROS
+
+    NOMBRE          shift and go to state 114
+
+    autoincremento                 shift and go to state 113
+
+state 99
+
+    (25) dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE . opcion_not condicion
+    (54) opcion_not -> . NEGACION
+    (55) opcion_not -> . empty
+    (56) empty -> .
+
+    NEGACION        shift and go to state 37
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    T_STRING        reduce using rule 56 (empty -> .)
+    T_DOUBLE        reduce using rule 56 (empty -> .)
+    IF              reduce using rule 56 (empty -> .)
+    WHILE           reduce using rule 56 (empty -> .)
+    FOR             reduce using rule 56 (empty -> .)
+    DO              reduce using rule 56 (empty -> .)
+    NOMBRE          reduce using rule 56 (empty -> .)
+    READ            reduce using rule 56 (empty -> .)
+    T_PRINT         reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+    opcion_not                     shift and go to state 115
+    empty                          shift and go to state 38
+
+state 100
+
+    (35) dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .
+
+    T_STRING        reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+    T_DOUBLE        reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+    IF              reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+    WHILE           reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+    FOR             reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+    DO              reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+    NOMBRE          reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+    READ            reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+    T_PRINT         reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+    APERTFIN        reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+    ELSE            reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+    RETURN          reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+
+
+state 101
+
+    (26) dec_proc -> DEF NOMBRE recibir APERTINICIO . instruccion APERTFIN
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    instruccion                    shift and go to state 116
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 102
+
+    (30) recibir -> T_STRING NOMBRE .
+
+    APERTINICIO     reduce using rule 30 (recibir -> T_STRING NOMBRE .)
+
+
+state 103
+
+    (31) recibir -> T_DOUBLE NOMBRE .
+
+    APERTINICIO     reduce using rule 31 (recibir -> T_DOUBLE NOMBRE .)
+
+
+state 104
+
+    (28) dec_func -> DEF NOMBRE recibir . APERTINICIO instruccion RETURN NOMBRE APERTFIN
+
+    APERTINICIO     shift and go to state 117
+
+
+state 105
+
+    (17) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .
+
+    T_STRING        reduce using rule 17 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .)
+    T_DOUBLE        reduce using rule 17 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .)
+    IF              reduce using rule 17 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .)
+    WHILE           reduce using rule 17 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .)
+    FOR             reduce using rule 17 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .)
+    DO              reduce using rule 17 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .)
+    NOMBRE          reduce using rule 17 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .)
+    READ            reduce using rule 17 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .)
+    T_PRINT         reduce using rule 17 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .)
+    APERTFIN        reduce using rule 17 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .)
+    ELSE            reduce using rule 17 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .)
+    RETURN          reduce using rule 17 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE .)
+
+
+state 106
+
+    (15) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .
+
+    T_STRING        reduce using rule 15 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .)
+    T_DOUBLE        reduce using rule 15 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .)
+    IF              reduce using rule 15 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .)
+    WHILE           reduce using rule 15 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .)
+    FOR             reduce using rule 15 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .)
+    DO              reduce using rule 15 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .)
+    NOMBRE          reduce using rule 15 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .)
+    READ            reduce using rule 15 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .)
+    T_PRINT         reduce using rule 15 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .)
+    APERTFIN        reduce using rule 15 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .)
+    ELSE            reduce using rule 15 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .)
+    RETURN          reduce using rule 15 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS .)
+
+
+state 107
+
+    (16) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .
+
+    T_STRING        reduce using rule 16 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .)
+    T_DOUBLE        reduce using rule 16 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .)
+    IF              reduce using rule 16 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .)
+    WHILE           reduce using rule 16 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .)
+    FOR             reduce using rule 16 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .)
+    DO              reduce using rule 16 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .)
+    NOMBRE          reduce using rule 16 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .)
+    READ            reduce using rule 16 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .)
+    T_PRINT         reduce using rule 16 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .)
+    APERTFIN        reduce using rule 16 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .)
+    ELSE            reduce using rule 16 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .)
+    RETURN          reduce using rule 16 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE .)
+
+
+state 108
+
+    (13) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .
+
+    T_STRING        reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    T_DOUBLE        reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    IF              reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    WHILE           reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    FOR             reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    DO              reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    NOMBRE          reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    READ            reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    T_PRINT         reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    APERTFIN        reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    ELSE            reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    RETURN          reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+
+
+state 109
+
+    (18) dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .
+
+    T_STRING        reduce using rule 18 (dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    T_DOUBLE        reduce using rule 18 (dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    IF              reduce using rule 18 (dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    WHILE           reduce using rule 18 (dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    FOR             reduce using rule 18 (dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    DO              reduce using rule 18 (dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    NOMBRE          reduce using rule 18 (dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    READ            reduce using rule 18 (dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    T_PRINT         reduce using rule 18 (dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    APERTFIN        reduce using rule 18 (dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    ELSE            reduce using rule 18 (dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    RETURN          reduce using rule 18 (dec_if -> IF opcion_not condicion APERTINICIO instruccion APERTFIN .)
+
+
+state 110
+
+    (19) dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE . instruccion APERTFIN
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    instruccion                    shift and go to state 118
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 111
+
+    (40) condicion -> expresion comparador expresion comparador . condicion
+    (40) condicion -> . expresion comparador expresion comparador condicion
+    (41) condicion -> . empty
+    (42) expresion -> . TEXTO
+    (43) expresion -> . NUMEROS
+    (44) expresion -> . NOMBRE
+    (56) empty -> .
+
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for TEXTO resolved as shift
+  ! shift/reduce conflict for NUMEROS resolved as shift
+    TEXTO           shift and go to state 54
+    NUMEROS         shift and go to state 55
+    NOMBRE          shift and go to state 56
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    T_STRING        reduce using rule 56 (empty -> .)
+    T_DOUBLE        reduce using rule 56 (empty -> .)
+    IF              reduce using rule 56 (empty -> .)
+    WHILE           reduce using rule 56 (empty -> .)
+    FOR             reduce using rule 56 (empty -> .)
+    DO              reduce using rule 56 (empty -> .)
+    READ            reduce using rule 56 (empty -> .)
+    T_PRINT         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! TEXTO           [ reduce using rule 56 (empty -> .) ]
+  ! NUMEROS         [ reduce using rule 56 (empty -> .) ]
+
+    expresion                      shift and go to state 52
+    condicion                      shift and go to state 119
+    empty                          shift and go to state 53
+
+state 112
+
+    (20) dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .
+
+    T_STRING        reduce using rule 20 (dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    T_DOUBLE        reduce using rule 20 (dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    IF              reduce using rule 20 (dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    WHILE           reduce using rule 20 (dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    FOR             reduce using rule 20 (dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    DO              reduce using rule 20 (dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    NOMBRE          reduce using rule 20 (dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    READ            reduce using rule 20 (dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    T_PRINT         reduce using rule 20 (dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    APERTFIN        reduce using rule 20 (dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    ELSE            reduce using rule 20 (dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .)
+    RETURN          reduce using rule 20 (dec_while -> WHILE opcion_not condicion APERTINICIO instruccion APERTFIN .)
+
+
+state 113
+
+    (21) dec_for -> FOR inicializacion COMA condicion COMA autoincremento . APERTINICIO instruccion APERTFIN
+
+    APERTINICIO     shift and go to state 120
+
+
+state 114
+
+    (23) autoincremento -> NOMBRE . MAS MAS
+    (24) autoincremento -> NOMBRE . MAS NUMEROS
+
+    MAS             shift and go to state 121
+
+
+state 115
+
+    (25) dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not . condicion
+    (40) condicion -> . expresion comparador expresion comparador condicion
+    (41) condicion -> . empty
+    (42) expresion -> . TEXTO
+    (43) expresion -> . NUMEROS
+    (44) expresion -> . NOMBRE
+    (56) empty -> .
+
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for TEXTO resolved as shift
+  ! shift/reduce conflict for NUMEROS resolved as shift
+    TEXTO           shift and go to state 54
+    NUMEROS         shift and go to state 55
+    NOMBRE          shift and go to state 56
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    T_STRING        reduce using rule 56 (empty -> .)
+    T_DOUBLE        reduce using rule 56 (empty -> .)
+    IF              reduce using rule 56 (empty -> .)
+    WHILE           reduce using rule 56 (empty -> .)
+    FOR             reduce using rule 56 (empty -> .)
+    DO              reduce using rule 56 (empty -> .)
+    READ            reduce using rule 56 (empty -> .)
+    T_PRINT         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! TEXTO           [ reduce using rule 56 (empty -> .) ]
+  ! NUMEROS         [ reduce using rule 56 (empty -> .) ]
+
+    condicion                      shift and go to state 122
+    expresion                      shift and go to state 52
+    empty                          shift and go to state 53
+
+state 116
+
+    (26) dec_proc -> DEF NOMBRE recibir APERTINICIO instruccion . APERTFIN
+
+    APERTFIN        shift and go to state 123
+
+
+state 117
+
+    (28) dec_func -> DEF NOMBRE recibir APERTINICIO . instruccion RETURN NOMBRE APERTFIN
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    instruccion                    shift and go to state 124
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 118
+
+    (19) dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion . APERTFIN
+
+    APERTFIN        shift and go to state 125
+
+
+state 119
+
+    (40) condicion -> expresion comparador expresion comparador condicion .
+
+    APERTINICIO     reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    COMA            reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    T_STRING        reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    T_DOUBLE        reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    IF              reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    WHILE           reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    FOR             reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    DO              reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    NOMBRE          reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    READ            reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    T_PRINT         reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    APERTFIN        reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    ELSE            reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+    RETURN          reduce using rule 40 (condicion -> expresion comparador expresion comparador condicion .)
+
+
+state 120
+
+    (21) dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO . instruccion APERTFIN
+    (2) instruccion -> . dec_variables instruccion
+    (3) instruccion -> . dec_if instruccion
+    (4) instruccion -> . dec_while instruccion
+    (5) instruccion -> . dec_for instruccion
+    (6) instruccion -> . dec_do_while instruccion
+    (7) instruccion -> . llamar_proc_func instruccion
+    (8) instruccion -> . dec_leer instruccion
+    (9) instruccion -> . dec_imprimir instruccion
+    (10) instruccion -> . empty
+    (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
+    (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+    (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+    (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
+    (18) dec_if -> . IF opcion_not condicion APERTINICIO instruccion APERTFIN
+    (19) dec_if -> . IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN
+    (20) dec_while -> . WHILE opcion_not condicion APERTINICIO instruccion APERTFIN
+    (21) dec_for -> . FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN
+    (25) dec_do_while -> . DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion
+    (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
+    (33) dec_leer -> . READ NOMBRE
+    (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (56) empty -> .
+
+  ! shift/reduce conflict for T_STRING resolved as shift
+  ! shift/reduce conflict for T_DOUBLE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for WHILE resolved as shift
+  ! shift/reduce conflict for FOR resolved as shift
+  ! shift/reduce conflict for DO resolved as shift
+  ! shift/reduce conflict for NOMBRE resolved as shift
+  ! shift/reduce conflict for READ resolved as shift
+  ! shift/reduce conflict for T_PRINT resolved as shift
+    T_STRING        shift and go to state 15
+    T_DOUBLE        shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    FOR             shift and go to state 20
+    DO              shift and go to state 21
+    NOMBRE          shift and go to state 16
+    READ            shift and go to state 22
+    T_PRINT         shift and go to state 23
+    APERTFIN        reduce using rule 56 (empty -> .)
+    DEF             reduce using rule 56 (empty -> .)
+    $end            reduce using rule 56 (empty -> .)
+    APERTINICIO     reduce using rule 56 (empty -> .)
+    COMA            reduce using rule 56 (empty -> .)
+    TEXTO           reduce using rule 56 (empty -> .)
+    NUMEROS         reduce using rule 56 (empty -> .)
+    ELSE            reduce using rule 56 (empty -> .)
+    RETURN          reduce using rule 56 (empty -> .)
+
+  ! T_STRING        [ reduce using rule 56 (empty -> .) ]
+  ! T_DOUBLE        [ reduce using rule 56 (empty -> .) ]
+  ! IF              [ reduce using rule 56 (empty -> .) ]
+  ! WHILE           [ reduce using rule 56 (empty -> .) ]
+  ! FOR             [ reduce using rule 56 (empty -> .) ]
+  ! DO              [ reduce using rule 56 (empty -> .) ]
+  ! NOMBRE          [ reduce using rule 56 (empty -> .) ]
+  ! READ            [ reduce using rule 56 (empty -> .) ]
+  ! T_PRINT         [ reduce using rule 56 (empty -> .) ]
+
+    instruccion                    shift and go to state 126
+    dec_variables                  shift and go to state 6
+    dec_if                         shift and go to state 7
+    dec_while                      shift and go to state 8
+    dec_for                        shift and go to state 9
+    dec_do_while                   shift and go to state 10
+    llamar_proc_func               shift and go to state 11
+    dec_leer                       shift and go to state 12
+    dec_imprimir                   shift and go to state 13
+    empty                          shift and go to state 14
+
+state 121
+
+    (23) autoincremento -> NOMBRE MAS . MAS
+    (24) autoincremento -> NOMBRE MAS . NUMEROS
+
+    MAS             shift and go to state 127
+    NUMEROS         shift and go to state 128
+
+
+state 122
+
+    (25) dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .
+
+    T_STRING        reduce using rule 25 (dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .)
+    T_DOUBLE        reduce using rule 25 (dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .)
+    IF              reduce using rule 25 (dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .)
+    WHILE           reduce using rule 25 (dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .)
+    FOR             reduce using rule 25 (dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .)
+    DO              reduce using rule 25 (dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .)
+    NOMBRE          reduce using rule 25 (dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .)
+    READ            reduce using rule 25 (dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .)
+    T_PRINT         reduce using rule 25 (dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .)
+    APERTFIN        reduce using rule 25 (dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .)
+    ELSE            reduce using rule 25 (dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .)
+    RETURN          reduce using rule 25 (dec_do_while -> DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion .)
+
+
+state 123
+
+    (26) dec_proc -> DEF NOMBRE recibir APERTINICIO instruccion APERTFIN .
+
+    DEF             reduce using rule 26 (dec_proc -> DEF NOMBRE recibir APERTINICIO instruccion APERTFIN .)
+    $end            reduce using rule 26 (dec_proc -> DEF NOMBRE recibir APERTINICIO instruccion APERTFIN .)
+
+
+state 124
+
+    (28) dec_func -> DEF NOMBRE recibir APERTINICIO instruccion . RETURN NOMBRE APERTFIN
+
+    RETURN          shift and go to state 129
+
+
+state 125
+
+    (19) dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .
+
+    T_STRING        reduce using rule 19 (dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .)
+    T_DOUBLE        reduce using rule 19 (dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .)
+    IF              reduce using rule 19 (dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .)
+    WHILE           reduce using rule 19 (dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .)
+    FOR             reduce using rule 19 (dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .)
+    DO              reduce using rule 19 (dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .)
+    NOMBRE          reduce using rule 19 (dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .)
+    READ            reduce using rule 19 (dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .)
+    T_PRINT         reduce using rule 19 (dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .)
+    APERTFIN        reduce using rule 19 (dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .)
+    ELSE            reduce using rule 19 (dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .)
+    RETURN          reduce using rule 19 (dec_if -> IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN .)
+
+
+state 126
+
+    (21) dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion . APERTFIN
+
+    APERTFIN        shift and go to state 130
+
+
+state 127
+
+    (23) autoincremento -> NOMBRE MAS MAS .
+
+    APERTINICIO     reduce using rule 23 (autoincremento -> NOMBRE MAS MAS .)
+
+
+state 128
+
+    (24) autoincremento -> NOMBRE MAS NUMEROS .
+
+    APERTINICIO     reduce using rule 24 (autoincremento -> NOMBRE MAS NUMEROS .)
+
+
+state 129
+
+    (28) dec_func -> DEF NOMBRE recibir APERTINICIO instruccion RETURN . NOMBRE APERTFIN
+
+    NOMBRE          shift and go to state 131
+
+
+state 130
+
+    (21) dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .
+
+    T_STRING        reduce using rule 21 (dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .)
+    T_DOUBLE        reduce using rule 21 (dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .)
+    IF              reduce using rule 21 (dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .)
+    WHILE           reduce using rule 21 (dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .)
+    FOR             reduce using rule 21 (dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .)
+    DO              reduce using rule 21 (dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .)
+    NOMBRE          reduce using rule 21 (dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .)
+    READ            reduce using rule 21 (dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .)
+    T_PRINT         reduce using rule 21 (dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .)
+    APERTFIN        reduce using rule 21 (dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .)
+    ELSE            reduce using rule 21 (dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .)
+    RETURN          reduce using rule 21 (dec_for -> FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN .)
+
+
+state 131
+
+    (28) dec_func -> DEF NOMBRE recibir APERTINICIO instruccion RETURN NOMBRE . APERTFIN
+
+    APERTFIN        shift and go to state 132
+
+
+state 132
+
+    (28) dec_func -> DEF NOMBRE recibir APERTINICIO instruccion RETURN NOMBRE APERTFIN .
+
+    $end            reduce using rule 28 (dec_func -> DEF NOMBRE recibir APERTINICIO instruccion RETURN NOMBRE APERTFIN .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for T_STRING in state 4 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 4 resolved as shift
+WARNING: shift/reduce conflict for IF in state 4 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 4 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 4 resolved as shift
+WARNING: shift/reduce conflict for DO in state 4 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 4 resolved as shift
+WARNING: shift/reduce conflict for READ in state 4 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 4 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 6 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 6 resolved as shift
+WARNING: shift/reduce conflict for IF in state 6 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 6 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 6 resolved as shift
+WARNING: shift/reduce conflict for DO in state 6 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 6 resolved as shift
+WARNING: shift/reduce conflict for READ in state 6 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 6 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 7 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 7 resolved as shift
+WARNING: shift/reduce conflict for IF in state 7 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 7 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 7 resolved as shift
+WARNING: shift/reduce conflict for DO in state 7 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 7 resolved as shift
+WARNING: shift/reduce conflict for READ in state 7 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 7 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 8 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 8 resolved as shift
+WARNING: shift/reduce conflict for IF in state 8 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 8 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 8 resolved as shift
+WARNING: shift/reduce conflict for DO in state 8 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 8 resolved as shift
+WARNING: shift/reduce conflict for READ in state 8 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 8 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 9 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 9 resolved as shift
+WARNING: shift/reduce conflict for IF in state 9 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 9 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 9 resolved as shift
+WARNING: shift/reduce conflict for DO in state 9 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 9 resolved as shift
+WARNING: shift/reduce conflict for READ in state 9 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 9 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 10 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 10 resolved as shift
+WARNING: shift/reduce conflict for IF in state 10 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 10 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 10 resolved as shift
+WARNING: shift/reduce conflict for DO in state 10 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 10 resolved as shift
+WARNING: shift/reduce conflict for READ in state 10 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 10 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 11 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 11 resolved as shift
+WARNING: shift/reduce conflict for IF in state 11 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 11 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 11 resolved as shift
+WARNING: shift/reduce conflict for DO in state 11 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 11 resolved as shift
+WARNING: shift/reduce conflict for READ in state 11 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 11 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 12 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 12 resolved as shift
+WARNING: shift/reduce conflict for IF in state 12 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 12 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 12 resolved as shift
+WARNING: shift/reduce conflict for DO in state 12 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 12 resolved as shift
+WARNING: shift/reduce conflict for READ in state 12 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 12 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 13 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 13 resolved as shift
+WARNING: shift/reduce conflict for IF in state 13 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 13 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 13 resolved as shift
+WARNING: shift/reduce conflict for DO in state 13 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 13 resolved as shift
+WARNING: shift/reduce conflict for READ in state 13 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 13 resolved as shift
+WARNING: shift/reduce conflict for DEF in state 24 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 36 resolved as shift
+WARNING: shift/reduce conflict for TEXTO in state 36 resolved as shift
+WARNING: shift/reduce conflict for NUMEROS in state 36 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 39 resolved as shift
+WARNING: shift/reduce conflict for TEXTO in state 39 resolved as shift
+WARNING: shift/reduce conflict for NUMEROS in state 39 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 42 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 42 resolved as shift
+WARNING: shift/reduce conflict for IF in state 42 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 42 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 42 resolved as shift
+WARNING: shift/reduce conflict for DO in state 42 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 42 resolved as shift
+WARNING: shift/reduce conflict for READ in state 42 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 42 resolved as shift
+WARNING: shift/reduce conflict for DEF in state 46 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 58 resolved as shift
+WARNING: shift/reduce conflict for TEXTO in state 58 resolved as shift
+WARNING: shift/reduce conflict for NUMEROS in state 58 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 69 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 69 resolved as shift
+WARNING: shift/reduce conflict for IF in state 69 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 69 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 69 resolved as shift
+WARNING: shift/reduce conflict for DO in state 69 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 69 resolved as shift
+WARNING: shift/reduce conflict for READ in state 69 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 69 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 80 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 80 resolved as shift
+WARNING: shift/reduce conflict for IF in state 80 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 80 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 80 resolved as shift
+WARNING: shift/reduce conflict for DO in state 80 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 80 resolved as shift
+WARNING: shift/reduce conflict for READ in state 80 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 80 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 101 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 101 resolved as shift
+WARNING: shift/reduce conflict for IF in state 101 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 101 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 101 resolved as shift
+WARNING: shift/reduce conflict for DO in state 101 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 101 resolved as shift
+WARNING: shift/reduce conflict for READ in state 101 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 101 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 110 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 110 resolved as shift
+WARNING: shift/reduce conflict for IF in state 110 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 110 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 110 resolved as shift
+WARNING: shift/reduce conflict for DO in state 110 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 110 resolved as shift
+WARNING: shift/reduce conflict for READ in state 110 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 110 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 111 resolved as shift
+WARNING: shift/reduce conflict for TEXTO in state 111 resolved as shift
+WARNING: shift/reduce conflict for NUMEROS in state 111 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 115 resolved as shift
+WARNING: shift/reduce conflict for TEXTO in state 115 resolved as shift
+WARNING: shift/reduce conflict for NUMEROS in state 115 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 117 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 117 resolved as shift
+WARNING: shift/reduce conflict for IF in state 117 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 117 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 117 resolved as shift
+WARNING: shift/reduce conflict for DO in state 117 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 117 resolved as shift
+WARNING: shift/reduce conflict for READ in state 117 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 117 resolved as shift
+WARNING: shift/reduce conflict for T_STRING in state 120 resolved as shift
+WARNING: shift/reduce conflict for T_DOUBLE in state 120 resolved as shift
+WARNING: shift/reduce conflict for IF in state 120 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 120 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 120 resolved as shift
+WARNING: shift/reduce conflict for DO in state 120 resolved as shift
+WARNING: shift/reduce conflict for NOMBRE in state 120 resolved as shift
+WARNING: shift/reduce conflict for READ in state 120 resolved as shift
+WARNING: shift/reduce conflict for T_PRINT in state 120 resolved as shift

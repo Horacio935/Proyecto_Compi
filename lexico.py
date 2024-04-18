@@ -5,22 +5,22 @@ import os
 import sys
 from datetime import datetime
 
-tokens = ['Nombre', 'NUMEROS', 'COMILLAS', 'ESPACIO', 'IGUALACION', 'DIFERENCIA',
-          'MML', 'MMR', 'MMIL', 'MMIR', 'OPCI', 'OPCII', 'Asignacion', 'INVALIDO',
+tokens = ['NOMBRE', 'NUMEROS', 'COMILLAS', 'ESPACIO', 'IGUALACION', 'DIFERENCIA',
+          'MML', 'MMR', 'MMIL', 'MMIR', 'OPCI', 'OPCII', 'ASIGNACION', 'INVALIDO',
           'TEXTO', 'PARENTIZQ', 'PARENTDER', 'COMA',
 ]
 
 reservadas = {
-    'niam': 'main',
-    'fi': 'if',
-    'esle': 'else',
-    'elihw': 'while',
-    'rof': 'for',
-    'od': 'do',
-    'ranroter': 'return',
-    'rimirpmi': 'print',
-    'reel': 'read',
-    'fed': 'def',
+    'niam': 'MAIN',
+    'fi': 'IF',
+    'esle': 'ELSE',
+    'elihw': 'WHILE',
+    'rof': 'FOR',
+    'od': 'DO',
+    'ranroter': 'RETURN',
+    'rimirpmi': 'T_PRINT',
+    'reel': 'READ',
+    'fed': 'DEF',
     'oicini': 'APERTINICIO',
     'nif': 'APERTFIN',
     'sam': 'MAS',
@@ -28,8 +28,8 @@ reservadas = {
     'ivid': 'DIVISION',
     'itlum': 'MULTIPLICACION',
     'ton': 'NEGACION',
-    'elbuod':'t_double',
-    'gnirts':'t_string'
+    'elbuod':'T_DOUBLE',
+    'gnirts':'T_STRING'
 }
 
 # Obtiene solo los valores del diccionario reservadas
@@ -42,8 +42,45 @@ tokens = tokens + list(reservadas.values())
 
 tabla_simbolos = []  # Se inicializa la tabla de símbolos vacía
 
-# Crea la tabla hash para almacenar la información de los tokens
-tabla_hash = {}
+class HashTable:
+    def __init__(self, size):
+        self.size = size
+        self.table = [None] * size
+        self.counter = 0  # Contador para asignar buckets secuenciales
+
+    def hash_function(self, key):
+        bucket = self.counter % self.size
+        self.counter += 1  # Incrementar el contador para el siguiente token
+        return bucket
+
+    def add_element(self, key, value):
+        index = self.hash_function(key)
+        if self.table[index] is None:
+            self.table[index] = [(key, value)]
+        else:
+            # Buscar si la clave ya existe en la lista
+            for i, (existing_key, existing_value) in enumerate(self.table[index]):
+                if existing_key == key:
+                    self.table[index].append((key, value))  # Agregar el nuevo elemento a la lista existente
+                break
+            else:
+                # Si la clave no existe, agregar el nuevo elemento como una nueva lista en la celda
+                self.table[index].append((key, value))
+
+
+    def get_value(self, key):
+        index = self.hash_function(key)
+        if self.table[index] is not None:
+            for existing_key, existing_value in self.table[index]:
+                if existing_key == key:
+                    return existing_value
+        raise KeyError(f"Key '{key}' not found in hash table")
+
+    def __repr__(self):
+        return repr(self.table)
+
+tabla_hash = HashTable(size=1000)  # Inicializar la tabla hash con un tamaño de 100 (puedes ajustar el tamaño)
+
 
 # Declarar variables globales
 pos_en_linea = 0
@@ -59,29 +96,32 @@ def calcular_numero_linea_real(lexpos, lexer_lexdata, numero_linea):
     numero_linea_real = numero_linea + lineas_hasta_antes_del_token + 0
 
 # Define la función para agregar un token a la tabla hash
-def agregar_a_tabla_hash(token, tipo, tamaño, posición, rol):
-    clave_token = token  # Clave inicialmente igual al token
-    if clave_token in tabla_hash:  # Verificar si el token ya existe en la tabla hash
-        sufijo_num = 2  # Inicializar el sufijo numérico en 2
-        while f"{token}_{sufijo_num}" in tabla_hash:  # Buscar el número más bajo disponible
-            sufijo_num += 1
-        clave_token = f"{token}_{sufijo_num}"  # Agregar el sufijo numérico al token repetido
-    tabla_hash[clave_token] = {'Tipo': tipo, 'Tamaño': tamaño, 'Posición': posición, 'Rol': rol}
+#def agregar_a_tabla_hash(token, tipo, tamaño, posición, rol):
+#    clave_token = token  # Clave inicialmente igual al token
+#    if clave_token in tabla_hash:  # Verificar si el token ya existe en la tabla hash
+#        sufijo_num = 2  # Inicializar el sufijo numérico en 2
+#        while f"{token}_{sufijo_num}" in tabla_hash:  # Buscar el número más bajo disponible
+#            sufijo_num += 1
+#        clave_token = f"{token}_{sufijo_num}"  # Agregar el sufijo numérico al token repetido
+#    tabla_hash[clave_token] = {'Tipo': tipo, 'Tamaño': tamaño, 'Posición': posición, 'Rol': rol}
 
 
-def agregar_simbolo(token, tipo, ambito, visibilidad, tamaño, posicion, rol):
-    if tipo in ['TEXTO', 'NUMEROS', 'Nombre', 'Asignacion', 'MML', 'MMR', 'MMIL', 'MMIR', 'DIFERENCIA', 'IGUALACION', 'OPCI', 'OPCII', 'COMILLAS', 'PARENTIZQ', 'PARENTDER', 'COMA'] + valores_reservadas:
+def agregar_simbolo(token, tipo, tamaño, posicion, rol):
+    if tipo in ['TEXTO', 'NUMEROS', 'NOMBRE', 'ASIGNACION', 'MML', 'MMR', 'MMIL', 'MMIR', 'DIFERENCIA', 'IGUALACION', 'OPCI', 'OPCII', 'COMILLAS', 'PARENTIZQ', 'PARENTDER', 'COMA'] + valores_reservadas:
         tamaño = len(token)
     elif tipo in valores_reservadas:
         tamaño = len(token)
-    agregar_a_tabla_hash(token, tipo, tamaño, posicion, rol)
-    tabla_simbolos.append({'Token': token, 'Tipo': tipo, 'Ambito': ambito, 'Visibilidad': visibilidad,
-                           'Tamaño': tamaño, 'Posicion': posicion, 'Rol': rol})
 
-def t_Nombre(t):
+    # Agregar el token directamente a la tabla hash
+    tabla_hash.add_element(token, {'Tipo': tipo, 'Tamaño': tamaño, 'Posicion': posicion, 'Rol': rol})
+
+    #agregar_a_tabla_hash(token, tipo, tamaño, posicion, rol)
+    tabla_simbolos.append({'Token': token, 'Tipo': tipo,'Tamaño': tamaño, 'Posicion': posicion, 'Rol': rol})
+
+def t_NOMBRE(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     # Asigna el tipo según las palabras reservadas
-    t.type = reservadas.get(t.value, 'Nombre')
+    t.type = reservadas.get(t.value, 'NOMBRE')
     # Verifica si el tipo del token es un operador lógico y ajusta el "rol" en la tabla de simbolos
     if t.value in ['sam', 'sonem', 'ivid', 'itlum', 'ton']:
         rol = 'Operadores Comparativos'
@@ -91,7 +131,7 @@ def t_Nombre(t):
         rol = 'Identificador'
 
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, rol)
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, rol)
     return t
 
 def t_COMENTARIO(t):
@@ -106,98 +146,98 @@ def t_TEXTO(t):
     r'"[a-zA-Z0-9_\s]*"'
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, 'TEXTO', 'Global', 'Publico', 0, pos_en_linea, 'Texto')
+    agregar_simbolo(t.value, 'TEXTO', 0, pos_en_linea, 'Texto')
     return t 
 
 def t_MMIL(t):
     r'<='
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Comparativo')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Operador Comparativo')
     return t
 
 def t_MMIR(t):
     r'>='
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Comparativo')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Operador Comparativo')
     return t
 
 def t_IGUALACION(t):
     r'=='
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Comparativo')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Operador Comparativo')
     return t
 
-def t_Asignacion(t):
+def t_ASIGNACION(t):
     r'='
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Comparativo')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Operador Comparativo')
     return t
 
 def t_MML(t):
     r'<'
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Comparativo')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Operador Comparativo')
     return t
 
 def t_MMR(t):
     r'>'
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Local', 'Privado', 0, pos_en_linea, 'Operador Comparativo')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Operador Comparativo')
     return t
 
 def t_DIFERENCIA(t):
     r'!='
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Logico')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Operador Logico')
     return t
 
 def t_OPCI(t):
     r'&&'
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Logico')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Operador Logico')
     return t
 
 def t_OPCII(t):
     r'\|\|'
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Logico')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Operador Logico')
     return t
 
 def t_COMILLAS(t):
     r'"|"'
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Simbolos')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Simbolos')
     return t
 
 def t_PARENTIZQ(t):
     r'\('
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Logico')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Operador Logico')
     return t
 
 def t_PARENTDER(t):
     r'\)'
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Operador Logico')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Operador Logico')
     return t
 
 def t_COMA(t):
     r','
     # Agregar el símbolo a la tabla
     calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-    agregar_simbolo(t.value, t.type, 'Global', 'Publico', 0, pos_en_linea, 'Simbolo')
+    agregar_simbolo(t.value, t.type, 0, pos_en_linea, 'Simbolo')
     return t
 
 def t_NUMEROS(t):
@@ -205,7 +245,7 @@ def t_NUMEROS(t):
      t.value = float(t.value)
     # Agregar el símbolo a la tabla
      calcular_posicion_en_linea(t.lexpos, t.lexer.lexdata)
-     agregar_simbolo(str(t.value), 'NUMEROS', 'Global', 'Publico', 0, pos_en_linea, 'Numero')
+     agregar_simbolo(str(t.value), 'NUMEROS', 0, pos_en_linea, 'Numero')
      return t
 
 def t_error(t):
@@ -249,10 +289,10 @@ def generar_bitacora_simbolos(tabla_simbolos):
         f.write('<!DOCTYPE html>\n<html>\n<head>\n<title>Tabla de Símbolos</title>\n</head>\n<body>\n')
         f.write('<h2>Tabla de Símbolos</h2>\n')
         f.write('<table border="1">\n')
-        f.write('<tr><th>Token</th><th>Tipo</th><th>Ambito</th><th>Visibilidad</th><th>Tamaño</th><th>Posicion</th><th>Rol</th></tr>\n')
+        f.write('<tr><th>Token</th><th>Tipo</th><th>Tamaño</th><th>Posicion</th><th>Rol</th></tr>\n')
         for simbolo in tabla_simbolos:
-            f.write(f'<tr><td>{simbolo["Token"]}</td><td>{simbolo["Tipo"]}</td><td>{simbolo["Ambito"]}</td>'
-                    f'<td>{simbolo["Visibilidad"]}</td><td>{simbolo["Tamaño"]}</td><td>{simbolo["Posicion"]}</td>'
+            f.write(f'<tr><td>{simbolo["Token"]}</td><td>{simbolo["Tipo"]}</td>'
+                    f'<td>{simbolo["Tamaño"]}</td><td>{simbolo["Posicion"]}</td>'
                     f'<td>{simbolo["Rol"]}</td></tr>\n')
         f.write('</table>\n')
         f.write('</body>\n</html>\n')
@@ -281,15 +321,22 @@ def imprimir_token(t, numero_linea):
     # Agregar el token a la tabla hash
     #agregar_a_tabla_hash(t.value, t.type, len(str(t.value)), pos_en_linea, 'Rol')
 
+
 def imprimir_tabla_hash():
-    print("Tabla Hash de Tokens Analizados:")
-    index = 1
-    for token, info in tabla_hash.items():
-        print(f"{index}. Token: {token}, Tipo: {info['Tipo']}, Tamaño: {info['Tamaño']}, Posición: {info['Posición']}, Rol: {info['Rol']}")
-        index += 1
+    print("Contenido de la Tabla Hash:")
+    for index, bucket in enumerate(tabla_hash.table):
+        if bucket is not None:
+            print(f"Bucket {index}: {bucket}")
+
+#def imprimir_tabla_hash():
+#    print("Tabla Hash de Tokens Analizados:")
+#    index = 1
+#    for token, info in tabla_hash.items():
+#        print(f"{index}. Token: {token}, Tipo: {info['Tipo']}, Tamaño: {info['Tamaño']}, Posición: {info['Posición']}, Rol: {info['Rol']}")
+#        index += 1
 
 directorio = ''
-archivo = buscarFicheros(directorio, extensiones=['.txt', '.rb'])
+archivo = buscarFicheros(directorio, extensiones=['.txt', '.rb'])    
 test = os.path.join(directorio, archivo)
 fp = codecs.open(test, "r", "utf-8")
 cadena = fp.read()
@@ -317,4 +364,4 @@ if tokens_analizados:
 generar_bitacora_simbolos(tabla_simbolos)
 
 generar_bitacora(tokens_analizados)
-#C:\Users\lopez\OneDrive\Escritorio\UMG\7mo Semestre\Compiladores\ProyectoFinal\tests\prueba2.rb  
+#C:\Users\lopez\OneDrive\Escritorio\UMG\7mo Semestre\Compiladores\ProyectoFinal\tests\prueba1.rb  
