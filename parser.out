@@ -23,8 +23,8 @@ Rule 9     instruccion -> dec_imprimir instruccion
 Rule 10    instruccion -> empty
 Rule 11    dec_variables -> T_STRING NOMBRE ASIGNACION TEXTO
 Rule 12    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS
-Rule 13    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-Rule 14    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE
+Rule 13    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE
+Rule 14    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
 Rule 15    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
 Rule 16    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
 Rule 17    dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -45,7 +45,7 @@ Rule 31    recibir -> T_DOUBLE NOMBRE
 Rule 32    llamar_proc_func -> NOMBRE IGUALACION NOMBRE
 Rule 33    dec_leer -> READ NOMBRE
 Rule 34    dec_imprimir -> T_PRINT ASIGNACION expresion
-Rule 35    dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion
+Rule 35    dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion
 Rule 36    operador_m -> MENOS
 Rule 37    operador_m -> MAS
 Rule 38    operador_m -> DIVISION
@@ -86,7 +86,7 @@ IF                   : 18 19
 IGUALACION           : 32 45
 INVALIDO             : 
 MAIN                 : 1
-MAS                  : 23 23 24 35 37
+MAS                  : 23 23 24 37
 MENOS                : 36
 MMIL                 : 49
 MMIR                 : 50
@@ -94,8 +94,8 @@ MML                  : 47
 MMR                  : 48
 MULTIPLICACION       : 39
 NEGACION             : 54
-NOMBRE               : 11 12 13 14 14 15 15 16 16 17 17 17 22 23 24 26 28 28 30 31 32 32 33 44
-NUMEROS              : 12 13 13 15 16 22 24 43
+NOMBRE               : 11 12 13 13 14 15 15 16 16 17 17 17 22 23 24 26 28 28 30 31 32 32 33 44
+NUMEROS              : 12 14 14 15 16 22 24 43
 OPCI                 : 51
 OPCII                : 52
 PARENTDER            : 
@@ -130,7 +130,7 @@ inicializacion       : 21
 instruccion          : 1 2 3 4 5 6 7 8 9 18 19 19 20 21 25 26 28
 llamar_proc_func     : 7
 opcion_not           : 18 19 20 25
-operador_m           : 13 15 16 17
+operador_m           : 14 15 16 17 35
 recibir              : 26 28
 
 Parsing method: SLR
@@ -178,8 +178,8 @@ state 4
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -191,7 +191,7 @@ state 4
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -264,8 +264,8 @@ state 6
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -277,7 +277,7 @@ state 6
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -343,8 +343,8 @@ state 7
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -356,7 +356,7 @@ state 7
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -422,8 +422,8 @@ state 8
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -435,7 +435,7 @@ state 8
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -501,8 +501,8 @@ state 9
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -514,7 +514,7 @@ state 9
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -580,8 +580,8 @@ state 10
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -593,7 +593,7 @@ state 10
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -659,8 +659,8 @@ state 11
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -672,7 +672,7 @@ state 11
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -738,8 +738,8 @@ state 12
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -751,7 +751,7 @@ state 12
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -817,8 +817,8 @@ state 13
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -830,7 +830,7 @@ state 13
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -908,8 +908,8 @@ state 16
 state 17
 
     (12) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> T_DOUBLE . NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -1004,7 +1004,7 @@ state 22
 state 23
 
     (34) dec_imprimir -> T_PRINT . ASIGNACION expresion
-    (35) dec_imprimir -> T_PRINT . ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> T_PRINT . ASIGNACION expresion operador_m expresion
 
     ASIGNACION      shift and go to state 44
 
@@ -1130,8 +1130,8 @@ state 34
 state 35
 
     (12) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NUMEROS
-    (13) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NOMBRE
+    (13) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NOMBRE
+    (14) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> T_DOUBLE NOMBRE . ASIGNACION NOMBRE operador_m NOMBRE
@@ -1290,8 +1290,8 @@ state 42
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -1303,7 +1303,7 @@ state 42
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -1376,7 +1376,7 @@ state 43
 state 44
 
     (34) dec_imprimir -> T_PRINT ASIGNACION . expresion
-    (35) dec_imprimir -> T_PRINT ASIGNACION . expresion MAS expresion
+    (35) dec_imprimir -> T_PRINT ASIGNACION . expresion operador_m expresion
     (42) expresion -> . TEXTO
     (43) expresion -> . NUMEROS
     (44) expresion -> . NOMBRE
@@ -1462,8 +1462,8 @@ state 49
 state 50
 
     (12) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NUMEROS
-    (13) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NUMEROS operador_m NUMEROS
-    (14) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NOMBRE
+    (13) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NOMBRE
+    (14) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NUMEROS operador_m NUMEROS
     (15) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NOMBRE operador_m NUMEROS
     (16) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NUMEROS operador_m NOMBRE
     (17) dec_variables -> T_DOUBLE NOMBRE ASIGNACION . NOMBRE operador_m NOMBRE
@@ -1558,7 +1558,10 @@ state 54
     READ            reduce using rule 42 (expresion -> TEXTO .)
     T_PRINT         reduce using rule 42 (expresion -> TEXTO .)
     APERTFIN        reduce using rule 42 (expresion -> TEXTO .)
+    MENOS           reduce using rule 42 (expresion -> TEXTO .)
     MAS             reduce using rule 42 (expresion -> TEXTO .)
+    DIVISION        reduce using rule 42 (expresion -> TEXTO .)
+    MULTIPLICACION  reduce using rule 42 (expresion -> TEXTO .)
     IGUALACION      reduce using rule 42 (expresion -> TEXTO .)
     DIFERENCIA      reduce using rule 42 (expresion -> TEXTO .)
     MML             reduce using rule 42 (expresion -> TEXTO .)
@@ -1589,7 +1592,10 @@ state 55
     READ            reduce using rule 43 (expresion -> NUMEROS .)
     T_PRINT         reduce using rule 43 (expresion -> NUMEROS .)
     APERTFIN        reduce using rule 43 (expresion -> NUMEROS .)
+    MENOS           reduce using rule 43 (expresion -> NUMEROS .)
     MAS             reduce using rule 43 (expresion -> NUMEROS .)
+    DIVISION        reduce using rule 43 (expresion -> NUMEROS .)
+    MULTIPLICACION  reduce using rule 43 (expresion -> NUMEROS .)
     IGUALACION      reduce using rule 43 (expresion -> NUMEROS .)
     DIFERENCIA      reduce using rule 43 (expresion -> NUMEROS .)
     MML             reduce using rule 43 (expresion -> NUMEROS .)
@@ -1620,7 +1626,10 @@ state 56
     READ            reduce using rule 44 (expresion -> NOMBRE .)
     T_PRINT         reduce using rule 44 (expresion -> NOMBRE .)
     APERTFIN        reduce using rule 44 (expresion -> NOMBRE .)
+    MENOS           reduce using rule 44 (expresion -> NOMBRE .)
     MAS             reduce using rule 44 (expresion -> NOMBRE .)
+    DIVISION        reduce using rule 44 (expresion -> NOMBRE .)
+    MULTIPLICACION  reduce using rule 44 (expresion -> NOMBRE .)
     IGUALACION      reduce using rule 44 (expresion -> NOMBRE .)
     DIFERENCIA      reduce using rule 44 (expresion -> NOMBRE .)
     MML             reduce using rule 44 (expresion -> NOMBRE .)
@@ -1701,7 +1710,11 @@ state 60
 state 61
 
     (34) dec_imprimir -> T_PRINT ASIGNACION expresion .
-    (35) dec_imprimir -> T_PRINT ASIGNACION expresion . MAS expresion
+    (35) dec_imprimir -> T_PRINT ASIGNACION expresion . operador_m expresion
+    (36) operador_m -> . MENOS
+    (37) operador_m -> . MAS
+    (38) operador_m -> . DIVISION
+    (39) operador_m -> . MULTIPLICACION
 
     T_STRING        reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
     T_DOUBLE        reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
@@ -1715,8 +1728,12 @@ state 61
     APERTFIN        reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
     ELSE            reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
     RETURN          reduce using rule 34 (dec_imprimir -> T_PRINT ASIGNACION expresion .)
-    MAS             shift and go to state 84
+    MENOS           shift and go to state 85
+    MAS             shift and go to state 86
+    DIVISION        shift and go to state 87
+    MULTIPLICACION  shift and go to state 88
 
+    operador_m                     shift and go to state 84
 
 state 62
 
@@ -1724,16 +1741,16 @@ state 62
     (30) recibir -> . T_STRING NOMBRE
     (31) recibir -> . T_DOUBLE NOMBRE
 
-    T_STRING        shift and go to state 86
-    T_DOUBLE        shift and go to state 87
+    T_STRING        shift and go to state 90
+    T_DOUBLE        shift and go to state 91
 
-    recibir                        shift and go to state 85
+    recibir                        shift and go to state 89
 
 state 63
 
     (28) dec_func -> DEF . NOMBRE recibir APERTINICIO instruccion RETURN NOMBRE APERTFIN
 
-    NOMBRE          shift and go to state 88
+    NOMBRE          shift and go to state 92
 
 
 state 64
@@ -1770,7 +1787,7 @@ state 66
 
 state 67
 
-    (14) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .
+    (13) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .
     (15) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE . operador_m NUMEROS
     (17) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE . operador_m NOMBRE
     (36) operador_m -> . MENOS
@@ -1778,29 +1795,29 @@ state 67
     (38) operador_m -> . DIVISION
     (39) operador_m -> . MULTIPLICACION
 
-    T_STRING        reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
-    T_DOUBLE        reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
-    IF              reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
-    WHILE           reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
-    FOR             reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
-    DO              reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
-    NOMBRE          reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
-    READ            reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
-    T_PRINT         reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
-    APERTFIN        reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
-    ELSE            reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
-    RETURN          reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
-    MENOS           shift and go to state 90
-    MAS             shift and go to state 91
-    DIVISION        shift and go to state 92
-    MULTIPLICACION  shift and go to state 93
+    T_STRING        reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    T_DOUBLE        reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    IF              reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    WHILE           reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    FOR             reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    DO              reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    NOMBRE          reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    READ            reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    T_PRINT         reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    APERTFIN        reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    ELSE            reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    RETURN          reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE .)
+    MENOS           shift and go to state 85
+    MAS             shift and go to state 86
+    DIVISION        shift and go to state 87
+    MULTIPLICACION  shift and go to state 88
 
-    operador_m                     shift and go to state 89
+    operador_m                     shift and go to state 93
 
 state 68
 
     (12) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .
-    (13) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS . operador_m NUMEROS
+    (14) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS . operador_m NUMEROS
     (16) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS . operador_m NOMBRE
     (36) operador_m -> . MENOS
     (37) operador_m -> . MAS
@@ -1819,10 +1836,10 @@ state 68
     APERTFIN        reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
     ELSE            reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
     RETURN          reduce using rule 12 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS .)
-    MENOS           shift and go to state 90
-    MAS             shift and go to state 91
-    DIVISION        shift and go to state 92
-    MULTIPLICACION  shift and go to state 93
+    MENOS           shift and go to state 85
+    MAS             shift and go to state 86
+    DIVISION        shift and go to state 87
+    MULTIPLICACION  shift and go to state 88
 
     operador_m                     shift and go to state 94
 
@@ -1841,8 +1858,8 @@ state 69
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -1854,7 +1871,7 @@ state 69
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -2131,8 +2148,8 @@ state 80
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -2144,7 +2161,7 @@ state 80
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -2219,7 +2236,7 @@ state 83
 
 state 84
 
-    (35) dec_imprimir -> T_PRINT ASIGNACION expresion MAS . expresion
+    (35) dec_imprimir -> T_PRINT ASIGNACION expresion operador_m . expresion
     (42) expresion -> . TEXTO
     (43) expresion -> . NUMEROS
     (44) expresion -> . NOMBRE
@@ -2232,37 +2249,73 @@ state 84
 
 state 85
 
+    (36) operador_m -> MENOS .
+
+    NUMEROS         reduce using rule 36 (operador_m -> MENOS .)
+    NOMBRE          reduce using rule 36 (operador_m -> MENOS .)
+    TEXTO           reduce using rule 36 (operador_m -> MENOS .)
+
+
+state 86
+
+    (37) operador_m -> MAS .
+
+    NUMEROS         reduce using rule 37 (operador_m -> MAS .)
+    NOMBRE          reduce using rule 37 (operador_m -> MAS .)
+    TEXTO           reduce using rule 37 (operador_m -> MAS .)
+
+
+state 87
+
+    (38) operador_m -> DIVISION .
+
+    NUMEROS         reduce using rule 38 (operador_m -> DIVISION .)
+    NOMBRE          reduce using rule 38 (operador_m -> DIVISION .)
+    TEXTO           reduce using rule 38 (operador_m -> DIVISION .)
+
+
+state 88
+
+    (39) operador_m -> MULTIPLICACION .
+
+    NUMEROS         reduce using rule 39 (operador_m -> MULTIPLICACION .)
+    NOMBRE          reduce using rule 39 (operador_m -> MULTIPLICACION .)
+    TEXTO           reduce using rule 39 (operador_m -> MULTIPLICACION .)
+
+
+state 89
+
     (26) dec_proc -> DEF NOMBRE recibir . APERTINICIO instruccion APERTFIN
 
     APERTINICIO     shift and go to state 101
 
 
-state 86
+state 90
 
     (30) recibir -> T_STRING . NOMBRE
 
     NOMBRE          shift and go to state 102
 
 
-state 87
+state 91
 
     (31) recibir -> T_DOUBLE . NOMBRE
 
     NOMBRE          shift and go to state 103
 
 
-state 88
+state 92
 
     (28) dec_func -> DEF NOMBRE . recibir APERTINICIO instruccion RETURN NOMBRE APERTFIN
     (30) recibir -> . T_STRING NOMBRE
     (31) recibir -> . T_DOUBLE NOMBRE
 
-    T_STRING        shift and go to state 86
-    T_DOUBLE        shift and go to state 87
+    T_STRING        shift and go to state 90
+    T_DOUBLE        shift and go to state 91
 
     recibir                        shift and go to state 104
 
-state 89
+state 93
 
     (15) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m . NUMEROS
     (17) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m . NOMBRE
@@ -2271,41 +2324,9 @@ state 89
     NOMBRE          shift and go to state 105
 
 
-state 90
-
-    (36) operador_m -> MENOS .
-
-    NUMEROS         reduce using rule 36 (operador_m -> MENOS .)
-    NOMBRE          reduce using rule 36 (operador_m -> MENOS .)
-
-
-state 91
-
-    (37) operador_m -> MAS .
-
-    NUMEROS         reduce using rule 37 (operador_m -> MAS .)
-    NOMBRE          reduce using rule 37 (operador_m -> MAS .)
-
-
-state 92
-
-    (38) operador_m -> DIVISION .
-
-    NUMEROS         reduce using rule 38 (operador_m -> DIVISION .)
-    NOMBRE          reduce using rule 38 (operador_m -> DIVISION .)
-
-
-state 93
-
-    (39) operador_m -> MULTIPLICACION .
-
-    NUMEROS         reduce using rule 39 (operador_m -> MULTIPLICACION .)
-    NOMBRE          reduce using rule 39 (operador_m -> MULTIPLICACION .)
-
-
 state 94
 
-    (13) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m . NUMEROS
+    (14) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m . NUMEROS
     (16) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m . NOMBRE
 
     NUMEROS         shift and go to state 108
@@ -2414,20 +2435,20 @@ state 99
 
 state 100
 
-    (35) dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .
+    (35) dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .
 
-    T_STRING        reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
-    T_DOUBLE        reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
-    IF              reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
-    WHILE           reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
-    FOR             reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
-    DO              reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
-    NOMBRE          reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
-    READ            reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
-    T_PRINT         reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
-    APERTFIN        reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
-    ELSE            reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
-    RETURN          reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion MAS expresion .)
+    T_STRING        reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .)
+    T_DOUBLE        reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .)
+    IF              reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .)
+    WHILE           reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .)
+    FOR             reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .)
+    DO              reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .)
+    NOMBRE          reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .)
+    READ            reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .)
+    T_PRINT         reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .)
+    APERTFIN        reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .)
+    ELSE            reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .)
+    RETURN          reduce using rule 35 (dec_imprimir -> T_PRINT ASIGNACION expresion operador_m expresion .)
 
 
 state 101
@@ -2444,8 +2465,8 @@ state 101
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -2457,7 +2478,7 @@ state 101
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -2586,20 +2607,20 @@ state 107
 
 state 108
 
-    (13) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .
+    (14) dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .
 
-    T_STRING        reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
-    T_DOUBLE        reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
-    IF              reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
-    WHILE           reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
-    FOR             reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
-    DO              reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
-    NOMBRE          reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
-    READ            reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
-    T_PRINT         reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
-    APERTFIN        reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
-    ELSE            reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
-    RETURN          reduce using rule 13 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    T_STRING        reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    T_DOUBLE        reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    IF              reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    WHILE           reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    FOR             reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    DO              reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    NOMBRE          reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    READ            reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    T_PRINT         reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    APERTFIN        reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    ELSE            reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
+    RETURN          reduce using rule 14 (dec_variables -> T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS .)
 
 
 state 109
@@ -2634,8 +2655,8 @@ state 110
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -2647,7 +2668,7 @@ state 110
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -2833,8 +2854,8 @@ state 117
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -2846,7 +2867,7 @@ state 117
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift
@@ -2939,8 +2960,8 @@ state 120
     (10) instruccion -> . empty
     (11) dec_variables -> . T_STRING NOMBRE ASIGNACION TEXTO
     (12) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS
-    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
-    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (13) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE
+    (14) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
     (15) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
     (16) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
     (17) dec_variables -> . T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE
@@ -2952,7 +2973,7 @@ state 120
     (32) llamar_proc_func -> . NOMBRE IGUALACION NOMBRE
     (33) dec_leer -> . READ NOMBRE
     (34) dec_imprimir -> . T_PRINT ASIGNACION expresion
-    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion MAS expresion
+    (35) dec_imprimir -> . T_PRINT ASIGNACION expresion operador_m expresion
     (56) empty -> .
 
   ! shift/reduce conflict for T_STRING resolved as shift

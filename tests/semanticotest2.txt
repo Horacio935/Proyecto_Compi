@@ -1,0 +1,24 @@
+class SemanticAnalyzer:
+    def __init__(self, tabla_simbolos):
+        self.tabla_simbolos = tabla_simbolos
+        self.error_encontrado = False  # Variable para rastrear si se encuentra algún error
+
+    def analizar_semanticamente(self):
+        for simbolo in self.tabla_simbolos:
+            if simbolo['Token'] == 'sam':  # Identificar el operador suma
+                posicion_operador = simbolo['Posicion']
+                posicion_operando1 = posicion_operador - 1
+                posicion_operando2 = posicion_operador + 1
+                if (posicion_operando1 >= 0 and posicion_operando2 < len(self.tabla_simbolos) and
+                        self.tabla_simbolos[posicion_operando1]['Tipo'] == 'NUMEROS' and
+                        self.tabla_simbolos[posicion_operando2]['Tipo'] == 'NUMEROS'):
+                    operandos = [self.tabla_simbolos[posicion_operando1]['Token'], self.tabla_simbolos[posicion_operando2]['Token']]
+                    resultado = sum(operandos)
+                    # Actualizar la tabla de símbolos con el resultado de la operación
+                    self.tabla_simbolos[posicion_operador]['Token'] = resultado
+                else:
+                    raise Exception(f"Error semántico: Operación no válida en línea {simbolo['Posicion']}")
+        if not self.error_encontrado:  # Verificar si no se encontraron errores
+            print("El analizador semántico no encontró errores.")
+        else:
+            print("Se encontraron errores durante el análisis semántico.")

@@ -365,3 +365,5 @@ generar_bitacora_simbolos(tabla_simbolos)
 
 generar_bitacora(tokens_analizados)
 #C:\Users\lopez\OneDrive\Escritorio\UMG\7mo Semestre\Compiladores\ProyectoFinal\tests\prueba1.rb  
+
+

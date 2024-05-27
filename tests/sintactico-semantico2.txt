@@ -1,0 +1,265 @@
+import ply.yacc as yacc
+import os
+import codecs
+import re
+from lexico import tokens
+from sys import stdin
+from datetime import datetime
+from graphviz import Digraph
+from semantico import SemanticAnalyzer
+from lexico import tabla_simbolos
+
+precedencia = {
+    ('left', 'instruccion'),
+    ('left', 'PRINT'),
+    ('left', 'MENOS'),
+    ('left', 'MAS'),
+    ('left', 'DIVISION'),
+    ('left', 'MULTIPLICACION'),
+    ('left', 'NOMBRE'),
+    ('right', 'WHILE'),
+    ('right', 'dec_proc', 'dec_func')
+}
+
+def p_Inicio(p):
+    '''Inicio : DEF MAIN APERTINICIO instruccion APERTFIN dec_proc dec_func'''
+    p[0] = ('Inicio', p[1], p[2], p[3], p[4], p[5], p[6], p[7])
+
+def p_instruccion(p):
+    '''instruccion : dec_variables instruccion
+                   | dec_if instruccion
+                   | dec_while instruccion
+                   | dec_for instruccion
+                   | dec_do_while instruccion
+                   | llamar_proc_func instruccion
+                   | dec_leer instruccion
+                   | dec_imprimir instruccion
+                   | empty'''
+    if len(p) == 3:
+        p[0] = ('instruccion', p[1], p[2])
+    else:
+        p[0] = ('instruccion', p[1])
+
+def p_dec_variables(p):
+    '''dec_variables : T_STRING NOMBRE ASIGNACION TEXTO
+                     | T_DOUBLE NOMBRE ASIGNACION NUMEROS
+                     | T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NUMEROS
+                     | T_DOUBLE NOMBRE ASIGNACION NOMBRE
+                     | T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NUMEROS
+                     | T_DOUBLE NOMBRE ASIGNACION NUMEROS operador_m NOMBRE
+                     | T_DOUBLE NOMBRE ASIGNACION NOMBRE operador_m NOMBRE'''
+    p[0] = ('dec_variables', *p[1:])
+
+def p_dec_if(p):
+    '''dec_if : IF opcion_not condicion APERTINICIO instruccion APERTFIN
+              | IF opcion_not condicion APERTINICIO instruccion ELSE instruccion APERTFIN'''
+    if len(p) == 7:
+        p[0] = ('dec_if', p[1], p[2], p[3], p[4], p[5], p[6])
+    else:
+        p[0] = ('dec_if', p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8])
+
+def p_dec_while(p):
+    '''dec_while : WHILE opcion_not condicion APERTINICIO instruccion APERTFIN'''
+    p[0] = ('dec_while', p[1], p[2], p[3], p[4], p[5], p[6])
+
+def p_dec_for(p):
+    '''dec_for : FOR inicializacion COMA condicion COMA autoincremento APERTINICIO instruccion APERTFIN'''
+    p[0] = ('dec_for', p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+
+def p_inicializacion_for(p):
+    '''inicializacion : NOMBRE ASIGNACION NUMEROS'''
+    p[0] = ('inicializacion', p[1], p[2], p[3])
+
+def p_autoincremento_for(p):
+    '''autoincremento : NOMBRE MAS MAS
+                      | NOMBRE MAS NUMEROS'''
+    p[0] = ('autoincremento', p[1], p[2], p[3])
+
+def p_dec_do_while(p):
+    '''dec_do_while : DO APERTINICIO instruccion APERTFIN WHILE opcion_not condicion'''
+    p[0] = ('dec_do_while', p[1], p[2], p[3], p[4], p[5], p[6], p[7])
+
+def p_dec_proc(p):
+    '''dec_proc : DEF NOMBRE recibir APERTINICIO instruccion APERTFIN
+                | empty'''
+    if len(p) == 7:
+        p[0] = ('dec_proc', p[1], p[2], p[3], p[4], p[5], p[6])
+    else:
+        p[0] = ('dec_proc', p[1])
+
+def p_dec_func(p):
+    '''dec_func : DEF NOMBRE recibir APERTINICIO instruccion RETURN NOMBRE APERTFIN
+                | empty'''
+    if len(p) == 8:
+        p[0] = ('dec_func', p[1], p[2], p[3], p[4], p[5], p[6], p[7])
+    else:
+        p[0] = ('dec_func', p[1])
+
+def p_recibir_proc_func(p):
+    '''recibir : T_STRING NOMBRE
+               | T_DOUBLE NOMBRE'''
+    p[0] = ('recibir', p[1], p[2])
+
+def p_llamar_proc_func(p):
+    '''llamar_proc_func : NOMBRE IGUALACION NOMBRE'''
+    p[0] = ('llamar_proc_func', p[1], p[2], p[3])
+
+def p_dec_leer(p):
+    '''dec_leer : READ NOMBRE'''
+    p[0] = ('dec_leer', p[1], p[2])
+
+def p_dec_imprimir(p):
+    '''dec_imprimir : T_PRINT ASIGNACION expresion
+                    | T_PRINT ASIGNACION expresion MAS expresion'''
+    if len(p) == 4:
+        p[0] = ('dec_imprimir', p[1], p[2], p[3])
+    else:
+        p[0] = ('dec_imprimir', p[1], p[2], p[3], p[4], p[5])
+
+def p_operador_m(p):
+    '''operador_m : MENOS
+                  | MAS
+                  | DIVISION
+                  | MULTIPLICACION'''
+    p[0] = ('operador_m', p[1])
+
+def p_condicion(p):
+    '''condicion : expresion comparador expresion comparador condicion
+                 | empty'''
+    if len(p) == 2:
+        p[0] = ('condicion', p[1])
+    else:
+        p[0] = ('condicion', p[1], p[2], p[3], p[4], p[5])
+
+def p_expresion(p):
+    '''expresion : TEXTO
+                 | NUMEROS
+                 | NOMBRE'''
+    p[0] = ('expresion', p[1])
+
+def p_comparador(p):
+    '''comparador : IGUALACION
+                  | DIFERENCIA
+                  | MML
+                  | MMR
+                  | MMIL
+                  | MMIR
+                  | OPCI
+                  | OPCII
+                  | empty'''
+    p[0] = ('comparador', p[1])
+
+def p_opcion_not(p):
+    '''opcion_not : NEGACION
+                  | empty'''
+    p[0] = ('opcion_not', p[1])
+
+def p_empty(p):
+    'empty :'
+    p[0] = ('empty',)
+
+def contar_lineas_hasta_posicion(texto, posicion):
+    num_lineas = 1
+    for i in range(posicion):
+        if texto[i] == '\n':
+            num_lineas += 1
+    return num_lineas
+
+def p_error(p):
+    error_message = ""
+    if p:
+        num_linea = contar_lineas_hasta_posicion(p.lexer.lexdata, p.lexpos)
+        error_message = f"Error de sintaxis en línea {num_linea}: No se esperaba el token '{p.value}'"
+        print(error_message)
+    else:
+        error_message = "Error de sintaxis: La entrada está incompleta o incorrecta"
+        print(error_message)
+    current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    error_html = f"<tr><td>{current_datetime}</td><td>No se esperaba el token '{p.value}'</td><td>{num_linea}</td></tr>"
+    file_exists = os.path.isfile("bitacora_errores_sin.html")
+    if not file_exists:
+        with open("bitacora_errores_sin.html", "w") as error_file:
+            error_file.write("<html><head><title>Bitácora de Errores Sintácticos</title></head><body><table border='1'><tr><th>Fecha y Hora</th><th>Error Sintáctico</th><th>Numero de linea</th></tr>")
+    with open("bitacora_errores_sin.html", "a") as error_file:
+        error_file.write(error_html)
+
+def cerrar_bitacora():
+    with open("bitacora_errores_sin.html", "a") as error_file:
+        error_file.write("</table></body></html>")
+
+def buscarFicheros(ruta, extensiones=['.txt', '.rb']):
+    ficheros = []
+    respuesta = False
+    while not respuesta:
+        nombreArchivo = input('\nRuta completa del archivo: ')
+        if os.path.exists(nombreArchivo):
+            respuesta = True
+        else:
+            print("Ruta de archivo inválida. Inténtalo de nuevo.")
+    print(f"Has escogido \"{nombreArchivo}\" \n")
+    return nombreArchivo
+
+directorio = ''
+archivo = buscarFicheros(directorio, extensiones=['.txt', '.rb'])
+test = os.path.join(directorio, archivo)
+fp = codecs.open(test, "r", "utf-8")
+cadena = fp.read()
+fp.close()
+
+parser = yacc.yacc('SLR')
+resultado = parser.parse(cadena)
+print(resultado)
+
+analyzer = SemanticAnalyzer(tabla_simbolos)
+try:
+    analyzer.analizar_semanticamente()
+except Exception as e:
+    print(e)
+
+def dibujar_arbol(arbol, nombre='AST'):
+    def recorrer_arbol(nodo, grafo, contador):
+        id_nodo = str(contador[0])
+        etiqueta = nodo[0]
+        grafo.node(id_nodo, etiqueta)
+        contador[0] += 1
+        id_nodo_actual = id_nodo
+        for hijo in nodo[1:]:
+            if isinstance(hijo, tuple):
+                id_hijo = str(contador[0])
+                recorrer_arbol(hijo, grafo, contador)
+                grafo.edge(id_nodo_actual, id_hijo)
+            else:
+                id_hoja = str(contador[0])
+                grafo.node(id_hoja, str(hijo))
+                grafo.edge(id_nodo_actual, id_hoja)
+                contador[0] += 1
+
+    grafo = Digraph(nombre, format='png')
+    contador = [0]
+    recorrer_arbol(arbol, grafo, contador)
+    grafo.render(nombre, view=False)
+    html_content = f"""
+    <html>
+    <head>
+        <title>Árbol Sintáctico</title>
+    </head>
+    <body>
+        <h1>Árbol Sintáctico</h1>
+        <img src="{nombre}.png" alt="Árbol Sintáctico">
+    </body>
+    </html>
+    """
+    with open(f"{nombre}.html", "w") as html_file:
+        html_file.write(html_content)
+
+if resultado:
+    dibujar_arbol(resultado, 'AST')
+else:
+    print("No se pudo generar el árbol sintáctico.")
+
+
+
+if resultado:
+    dibujar_arbol(resultado, 'AST')
+else:
+    print("No se pudo generar el árbol sintáctico.")

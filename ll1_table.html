@@ -1,0 +1,27 @@
+<html><head><style>table { border-collapse: collapse; width: 50%; }th, td { border: 1px solid black; text-align: center; padding: 4px; width: 60px; }th { background-color: #f2f2f2; }</style></head><body>
+<h1>First Sets</h1>
+<table>
+<tr><td>E</td><td>id, (</td></tr>
+<tr><td>E'</td><td>+, e</td></tr>
+<tr><td>T</td><td>id, (</td></tr>
+<tr><td>T'</td><td>*, e</td></tr>
+<tr><td>F</td><td>id, (</td></tr>
+</table>
+<h1>Follow Sets</h1>
+<table>
+<tr><td>E</td><td>), $</td></tr>
+<tr><td>E'</td><td>), $</td></tr>
+<tr><td>T</td><td>+, ), $</td></tr>
+<tr><td>T'</td><td>+, ), $</td></tr>
+<tr><td>F</td><td>+, *, ), $</td></tr>
+</table>
+<h1>LL(1) Parsing Table</h1>
+<table>
+<tr><th></th><th>id</th><th>+</th><th>*</th><th>(</th><th>)</th><th>$</th></tr>
+<tr><th>E</th><td>T E'</td><td></td><td></td><td>T E'</td><td></td><td></td></tr>
+<tr><th>E'</th><td></td><td>+ T E'</td><td></td><td></td><td>e</td><td>e</td></tr>
+<tr><th>T</th><td>F T'</td><td></td><td></td><td>F T'</td><td></td><td></td></tr>
+<tr><th>T'</th><td></td><td>e</td><td>* F T'</td><td></td><td>e</td><td>e</td></tr>
+<tr><th>F</th><td>id</td><td></td><td></td><td>( E )</td><td></td><td></td></tr>
+</table>
+</body></html>
