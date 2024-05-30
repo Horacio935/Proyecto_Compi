@@ -1,0 +1,14 @@
+<html><head><style>table { border-collapse: collapse; width: 100%; }th, td { border: 1px solid black; text-align: left; padding: 4px; }th { background-color: #f2f2f2; }</style></head><body>
+<h1>Parsing Steps</h1>
+<table>
+<tr><th>Stack</th><th>Input</th><th>Action</th></tr>
+<tr><td>$E</td><td>id + t $</td><td>Aplicar E → T E'</td></tr>
+<tr><td>$E'T</td><td>id + t $</td><td>Aplicar T → F T'</td></tr>
+<tr><td>$T'E'F</td><td>id + t $</td><td>Aplicar F → id</td></tr>
+<tr><td>$T'E'id</td><td>+ t $</td><td>id se consume de la entrada y la pila</td></tr>
+<tr><td>$E'T'</td><td>+ t $</td><td>Aplicar T' → e</td></tr>
+<tr><td>$E'e</td><td>+ t $</td><td>Aplicar ε</td></tr>
+<tr><td>$E'</td><td>+ t $</td><td>Aplicar E' → + T E'</td></tr>
+<tr><td>$TE'+</td><td>t $</td><td>+ se consume de la entrada y la pila</td></tr>
+</table>
+</body></html>

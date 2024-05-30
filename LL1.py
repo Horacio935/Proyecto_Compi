@@ -1,130 +1,105 @@
-class LL1Parser:
-    def __init__(self):
-        self.rules = {
-            'E': [['T', "E'"]],
-            "E'": [['+', 'T', "E'"], ['e']],  # Cambiado 'ε' por 'e'
-            'T': [['F', "T'"]],
-            "T'": [['*', 'F', "T'"], ['e']],  # Cambiado 'ε' por 'e'
-            'F': [['id'], ['(', 'E', ')']]
-        }
+import collections
 
-        self.first = {
-            'E': ['id', '('],
-            "E'": ['+', 'e'],  # Cambiado 'ε' por 'e'
-            'T': ['id', '('],
-            "T'": ['*', 'e'],  # Cambiado 'ε' por 'e'
-            'F': ['id', '(']
-        }
+epsilon = 'ε'
 
-        self.follow = {
-            'E': [')', '$'],
-            "E'": [')', '$'],
-            'T': ['+', ')', '$'],
-            "T'": ['+', ')', '$'],
-            'F': ['+', '*', ')', '$']
-        }
+# Función para obtener los primeros de una gramática
+def compute_firsts(grammar):
+    firsts = collections.defaultdict(set)
 
-        self.parse_table = {
-            ('E', 'id'): ['T', "E'"],
-            ('E', '('): ['T', "E'"],
-            ("E'", '+'): ['+', 'T', "E'"],
-            ("E'", ')'): ['e'],  # Cambiado 'ε' por 'e'
-            ("E'", '$'): ['e'],  # Cambiado 'ε' por 'e'
-            ('T', 'id'): ['F', "T'"],
-            ('T', '('): ['F', "T'"],
-            ("T'", '+'): ['e'],  # Cambiado 'ε' por 'e'
-            ("T'", '*'): ['*', 'F', "T'"],
-            ("T'", ')'): ['e'],  # Cambiado 'ε' por 'e'
-            ("T'", '$'): ['e'],  # Cambiado 'ε' por 'e'
-            ('F', 'id'): ['id'],
-            ('F', '('): ['(', 'E', ')']
-        }
-
-    def parse(self, tokens):
-        stack = ['$', 'E']
-        index = 0
-
-        while stack:
-            top = stack.pop()
-            token = tokens[index]
-
-            if top == 'e':
-                continue
-
-            if top == token:
-                index += 1
-                if token == '$':
-                    return True
-            elif top in self.rules:
-                rule = self.parse_table.get((top, token))
-                if rule:
-                    for symbol in reversed(rule):
-                        stack.append(symbol)
+    def first(symbol):
+        if symbol not in grammar:  # Si es un terminal
+            return {symbol}
+        if not firsts[symbol]:  # Si no está calculado aún
+            for production in grammar[symbol]:
+                for token in production:
+                    token_first = first(token)
+                    firsts[symbol].update(token_first - {epsilon})
+                    if epsilon not in token_first:
+                        break
                 else:
-                    return False
-            else:
-                return False
-        return False
+                    firsts[symbol].add(epsilon)
+        return firsts[symbol]
 
-    def save_to_html(self, filename):
-        with open(filename, 'w', encoding='utf-8') as f:
-            f.write('<html><head><style>')
-            f.write('table { border-collapse: collapse; width: 50%; }')  # Ajustar ancho de la tabla
-            f.write('th, td { border: 1px solid black; text-align: center; padding: 4px; width: 60px; }')  # Ajustar ancho de las celdas
-            f.write('th { background-color: #f2f2f2; }')
-            f.write('</style></head><body>\n')
-            f.write('<h1>First Sets</h1>\n')
-            f.write('<table>\n')
-            for non_terminal, first_set in self.first.items():
-                f.write(f'<tr><td>{non_terminal}</td><td>{", ".join(first_set)}</td></tr>\n')
-            f.write('</table>\n')
+    for non_terminal in grammar:
+        first(non_terminal)
+    return firsts
 
-            f.write('<h1>Follow Sets</h1>\n')
-            f.write('<table>\n')
-            for non_terminal, follow_set in self.follow.items():
-                f.write(f'<tr><td>{non_terminal}</td><td>{", ".join(follow_set)}</td></tr>\n')
-            f.write('</table>\n')
+# Función para obtener los siguientes de una gramática
+def compute_follows(grammar, firsts):
+    follows = collections.defaultdict(set)
+    start_symbol = next(iter(grammar))
+    follows[start_symbol].add('$')
 
-            f.write('<h1>LL(1) Parsing Table</h1>\n')
-            terminals = ['id', '+', '*', '(', ')', '$']
-            f.write('<table>\n')
-            f.write('<tr><th></th>')
-            for terminal in terminals:
-                f.write(f'<th>{terminal}</th>')
-            f.write('</tr>\n')
-
-            non_terminals = ['E', "E'", 'T', "T'", 'F']
-            for non_terminal in non_terminals:
-                f.write(f'<tr><th>{non_terminal}</th>')
-                for terminal in terminals:
-                    production = self.parse_table.get((non_terminal, terminal), [])
-                    if production:
-                        production_str = ' '.join(production)
+    while True:
+        updated = False
+        for head, productions in grammar.items():
+            for production in productions:
+                trailer = follows[head].copy()
+                for symbol in reversed(production):
+                    if symbol in grammar:
+                        if follows[symbol].update(trailer):
+                            updated = True
+                        if epsilon in firsts[symbol]:
+                            trailer.update(firsts[symbol] - {epsilon})
+                        else:
+                            trailer = firsts[symbol].copy()
                     else:
-                        production_str = ''
-                    f.write(f'<td>{production_str}</td>')
-                f.write('</tr>\n')
-            f.write('</table>\n')
+                        trailer = {symbol}
+        if not updated:
+            break
 
-            f.write('</body></html>\n')
+    return follows
 
+# Función para construir la tabla LL1
+def build_ll1_table(grammar, firsts, follows):
+    table = collections.defaultdict(dict)
+
+    for head, productions in grammar.items():
+        for production in productions:
+            first_of_production = set()
+            for symbol in production:
+                first_of_production.update(firsts[symbol])
+                if epsilon not in firsts[symbol]:
+                    break
+            else:
+                first_of_production.add(epsilon)
+            for terminal in first_of_production - {epsilon}:
+                table[head][terminal] = production
+            if epsilon in first_of_production:
+                for terminal in follows[head]:
+                    table[head][terminal] = production
+    return table
+
+# Función principal
 def main():
-    parser = LL1Parser()
-    input_string = input("Ingrese una cadena de entrada: ").strip()
-    tokens = input_string.split()
+    grammar = collections.defaultdict(list)
 
-    if tokens[-1] != '$':
-        tokens.append('$')
+    print("Ingrese las producciones (por ejemplo, E->T E'). Ingrese una línea vacía para terminar:")
+    while True:
+        production = input().strip()
+        if not production:
+            break
+        head, bodies = production.split('->')
+        head = head.strip()
+        for body in bodies.split('|'):
+            grammar[head].append(body.strip().split())
 
-    if parser.parse(tokens):
-        print("Cadena válida.")
-    else:
-        print("Cadena no válida.")
+    firsts = compute_firsts(grammar)
+    follows = compute_follows(grammar, firsts)
+    ll1_table = build_ll1_table(grammar, firsts, follows)
 
-    parser.save_to_html('ll1_table.html')
-    print("Tablas de First, Follow y la tabla LL1 se han guardado en 'll1_table.html'.")
+    print("\nTabla de Primeros y Siguientes:")
+    print(f"{'No Terminal':<12}{'Primero':<20}{'Siguiente'}")
+    print('-' * 50)
+    for non_terminal in grammar:
+        first_set = firsts[non_terminal]
+        follow_set = follows[non_terminal]
+        print(f"{non_terminal:<12}{str(first_set):<20}{str(follow_set)}")
+
+    print("\nTabla LL1:")
+    for non_terminal, rules in ll1_table.items():
+        for terminal, production in rules.items():
+            print(f"M[{non_terminal}, {terminal}] = {production}")
 
 if __name__ == "__main__":
     main()
-
-
